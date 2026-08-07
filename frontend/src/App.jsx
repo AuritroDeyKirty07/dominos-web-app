@@ -6,7 +6,9 @@ function App() {
   return (
     <div>
       <Navbar />
-      <AppRoutes />
+      <div className="pt-[80px] w-full min-h-screen box-border">
+        <AppRoutes />
+      </div>
     </div>
   );
 }
