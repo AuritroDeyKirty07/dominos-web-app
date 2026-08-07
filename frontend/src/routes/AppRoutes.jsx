@@ -5,6 +5,9 @@ import RegisterPage from '../modules/auth/pages/RegisterPage';
 import ProfilePage from '../modules/dashboard/pages/ProfilePage';
 import ProtectedRoute from '../shared/components/ProtectedRoute';
 import ResetPasswordPage from '../modules/auth/pages/ResetPasswordPage';
+import DeliveryDashboard from '../modules/delivery/pages/DeliveryDashboard';
+import OrderAcceptancePage from '../modules/delivery/pages/OrderAcceptancePage';
+import OutForDeliveryPage from '../modules/delivery/pages/OutForDeliveryPage';
 
 export default function AppRoutes() {
   return (
@@ -29,6 +32,11 @@ export default function AppRoutes() {
           </ProtectedRoute>
         } 
       />
+
+      {/* Delivery Routes */}
+      <Route path="/delivery" element={<DeliveryDashboard />} />
+      <Route path="/delivery/accept-order" element={<OrderAcceptancePage />} />
+      <Route path="/delivery/out-for-delivery" element={<OutForDeliveryPage />} />
     </Routes>
   );
 }
