@@ -63,7 +63,7 @@ export default function RegisterForm() {
 
       await axiosInstance.post("/register", payload);
 
-      navigate("/login");
+      navigate(`/login?role=${roleQuery}`);
     } catch (err) {
       setErrorMsg(err.response?.data?.message || "Registration failed.");
     }
