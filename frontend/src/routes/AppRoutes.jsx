@@ -4,6 +4,7 @@ import LoginPage from '../modules/auth/pages/LoginPage';
 import RegisterPage from '../modules/auth/pages/RegisterPage';
 import ProfilePage from '../modules/dashboard/pages/ProfilePage';
 import ProtectedRoute from '../shared/components/ProtectedRoute';
+import ResetPasswordPage from '../modules/auth/pages/ResetPasswordPage';
 
 export default function AppRoutes() {
   return (
@@ -17,6 +18,14 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute>
             <ProfilePage />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/profile/reset-password" 
+        element={
+          <ProtectedRoute>
+            <ResetPasswordPage />
           </ProtectedRoute>
         } 
       />

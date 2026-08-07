@@ -35,6 +35,24 @@ export const registerService = async (userData) => {
 };
 
 
+export const resetPassword = async (userData,id) =>{
+  const {oldPass, newPass} = userData;
+  const existingUser = await userModel.findById(id);
+  if(!existingUser){
+    throw new Error("User doesn't exist");
+  }
+  const checkPass = await bcrypt.compare(oldPass,existingUser.passwordHash);
+  if(!checkPass){
+    throw new Error("password is incorrect");
+  }
+  if(oldPass === newPass){
+    throw new Error("Old and New Password cannot be same");
+  }
+  const newHashPass = await bcrypt.hash(newPass,10);
+  existingUser.passwordHash = newHashPass;
+  await existingUser.save();
+}
+
 export const loginService = async (userData) => {
   const { email, password } = userData;
 

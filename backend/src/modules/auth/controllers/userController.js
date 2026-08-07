@@ -1,4 +1,4 @@
-import { loginService, registerService } from "../service/userService.js";
+import { loginService, registerService, resetPassword } from "../service/userService.js";
 
 export const registerController=async(req,res)=>{
     try {
@@ -36,6 +36,28 @@ export const loginController=async(req,res)=>{
         res.status(500).json({message:"internal server error"});
         
     }
+}
+
+export const resetPass = async (req,res) =>{
+  try{
+    const token = req.cookies.token;
+    if(!token){
+      return res.status(401).json({
+        message:"token not found"
+      });
+    }
+    const userId = req.userId;
+    const userData = req.body;
+    await resetPassword(userData,userId);
+    return res.status(200).json({
+      message:"Password changed"
+    });
+  }
+  catch(error){
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
 }
 
 export const logoutController = async (req, res) => {

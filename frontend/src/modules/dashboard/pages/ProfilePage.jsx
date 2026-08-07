@@ -1,13 +1,21 @@
 import React from 'react';
 import { logoutUser } from '@/modules/auth/services/authService.js';
+import { useNavigate } from 'react-router-dom';
 
 export default function ProfilePage() {
+  const navigate = useNavigate();
   return (
     <div style={{ padding: '2rem', textAlign: 'center' }}>
 
       <button 
+        onClick={() => navigate('/profile/reset-password')}
+        style={{ padding: '10px 20px', margin: '50px 10px', backgroundColor: '#006491', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px', fontWeight: 'bold' }}
+      >
+        Reset Password
+      </button>
+      <button 
         onClick={logoutUser}
-        style={{ padding: '10px 20px',margin: '50px', backgroundColor: '#e74c3c', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px', fontWeight: 'bold' }}
+        style={{ padding: '10px 20px', margin: '50px 10px', backgroundColor: '#e74c3c', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontSize: '16px', fontWeight: 'bold' }}
       >
         Sign Out
       </button>
