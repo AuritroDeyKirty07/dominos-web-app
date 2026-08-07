@@ -1,0 +1,54 @@
+.auth-page-wrapper {
+  display: flex;
+  min-height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  padding-top: 70px; 
+}
+
+.auth-image-side {
+  flex: 1;
+  display: none;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+@media (min-width: 900px) {
+  .auth-image-side {
+    display: block;
+  }
+}
+
+.brand-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 4rem 3rem;
+  background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+  color: white;
+}
+
+.brand-logo {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.brand-overlay h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.2;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.auth-form-side {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
