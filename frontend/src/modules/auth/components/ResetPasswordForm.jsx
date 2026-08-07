@@ -8,7 +8,13 @@ import axiosInstance from '../../../shared/api/axiosInstance';
 
 const resetSchema = z.object({
   oldPass: z.string().min(1, "Old password is required"),
-  newPass: z.string().min(6, "New password must be at least 6 characters"),
+  newPass: z
+    .string()
+    .min(6, "Minimum 6 characters")
+    .regex(/[a-z]/, "Must contain 1 lowercase character")
+    .regex(/[A-Z]/, "Must contain 1 uppercase character")
+    .regex(/[0-9]/, "Must contain 1 numeric character")
+    .regex(/[@$!.()%^*'";:]/, "Must contain 1 special character"),
 });
 
 export default function ResetPasswordForm() {
