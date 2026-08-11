@@ -1,3 +1,4 @@
+import { logger } from "../../../shared/services/logger.js";
 import { changeUserRoleService, changeUserStatusService, createStaffService, getAllRightsService, getAllRolesService, updateRoleRightsService } from "../service/adminCreateStaff-service.js";
 
 export const createStaffController = async (req, res) => {
@@ -21,7 +22,8 @@ export const createStaffController = async (req, res) => {
       }
     });
   } catch (error) {
-    console.error(error);
+    // console.error(error);
+    logger.error(err);
     return res.status(500).json({
       message: error.message,
       error
@@ -42,6 +44,7 @@ export const changeUserRoleController = async (req, res) => {
     });
 
   } catch (error) {
+    logger.error(err);
     return res.status(400).json({
       message: error.message
     });
@@ -62,6 +65,7 @@ export const changeUserStatusController = async (req, res) => {
     });
 
   } catch (error) {
+    logger.error(err);
     return res.status(400).json({
       message: error.message
     });
@@ -78,6 +82,7 @@ export const getAllRolesController = async (req, res) => {
       roles
     });
   } catch (error) {
+    logger.error(err);
     return res.status(500).json({
       message: error.message
     });
@@ -95,6 +100,7 @@ export const getAllRightsController = async (req, res) => {
       rights,
     });
   } catch (error) {
+    logger.error(err);
     return res.status(500).json({
       message: error.message,
     });
@@ -113,6 +119,7 @@ export const updateRoleRightsController = async (req, res) => {
       role,
     });
   } catch (error) {
+    logger.error(err);
     return res.status(400).json({
       message: error.message,
     });
