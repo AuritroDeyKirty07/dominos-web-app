@@ -7,7 +7,7 @@
 | Team 1 | Auritro, Tanish, Gyanender | Authentication & RBAC |
 | Team 2 | Saranshi, Mahi, Pragya | Customer |
 | Team 3 | Aman, Anirudh, Aanchal| Delivery |
-| Team 4 | Aditya, Piyush, Rachit | Cook + Admin |
+| Team 4 | Aditya, Piyush, Rachit | Admin |
 | Team 5 | Ayush, Himanshu, Savan, Animesh | Cook |
 
 > **Note:** Team 4 and Team 5 will independently develop the **Cook Module**. After completion, both implementations will be reviewed and compared, and the better version will be merged into the main branch.
