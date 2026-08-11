@@ -1,11 +1,13 @@
 import jwt from "jsonwebtoken";
 
+const getJwtSecret = () => process.env.JWT_SECRET || "dominos_jwt_secret_key_12345";
+
 export const genrateToken =  (userId) => {
   const token = jwt.sign(
     {
       userId:userId,
     },
-    process.env.JWT_SECRET,
+    getJwtSecret(),
     {
       expiresIn: "7d",
     },
@@ -14,7 +16,7 @@ export const genrateToken =  (userId) => {
 };
 
 export const verifyToken=(token)=>{
-    const decodedPayload=jwt.verify(token,process.env.JWT_SECRET);
+    const decodedPayload=jwt.verify(token, getJwtSecret());
     if(!decodedPayload){
         throw new Error("token verification failed");
     }

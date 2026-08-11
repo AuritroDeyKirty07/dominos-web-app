@@ -4,9 +4,9 @@ import AppRoutes from './routes/AppRoutes';
 
 function App() {
   return (
-    <div>
+    <div className="min-h-screen bg-slate-50 w-full overflow-x-hidden">
       <Navbar />
-      <div className="pt-[80px] w-full min-h-screen box-border">
+      <div style={{ paddingTop: '120px' }} className="w-full min-h-screen box-border bg-slate-50">
         <AppRoutes />
       </div>
     </div>
