@@ -8,7 +8,7 @@ export default function Navbar() {
   const navigate = useNavigate();
   const currentPath = location.pathname;
 
-  const { isAuthenticated } = useAuthStore()
+  const { isAuthenticated, role } = useAuthStore()
   const isLoggedIn = isAuthenticated
 
   return (
@@ -20,13 +20,9 @@ export default function Navbar() {
       </div>
       
       <div className="navbar-right">
-        <Link to="/store" className="nav-link">Store</Link>
-
-
-        <Link to="/cart" className="nav-link">Cart</Link>
-
-
-        
+        {role !== 'cook' && <Link to="/store" className="nav-link">Store</Link>}
+        {role !== 'cook' && <Link to="/cart" className="nav-link">Cart</Link>}
+        {role === 'cook' && <Link to="/kitchen" className="nav-link">Dashboard</Link>}
         {!isLoggedIn && (
         <button 
           className={`nav-btn ${currentPath === '/register' ? 'active' : ''}`}

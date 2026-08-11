@@ -8,6 +8,7 @@ import cors from "cors";
 import { authRouter } from "./modules/auth/routes/userRoute.js";
 import { isAuthMiddleware } from "./shared/middleware/auth-middleware.js";
 import { profileRouter } from "./modules/auth/routes/profileRoutes.js";
+import kitchenRoutes from "./modules/kitchen/routes/kitchenRoutes.js";
 dotenv.config();
 
 const PORT=5000;
@@ -21,7 +22,8 @@ app.use(cors({
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api/v1",authRouter);
-app.use("/api/v1",profileRouter)
+app.use("/api/v1",profileRouter);
+app.use("/api/kitchen", kitchenRoutes);
 
 
 const promise=createConnection();

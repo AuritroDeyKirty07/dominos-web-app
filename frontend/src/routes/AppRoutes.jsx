@@ -5,6 +5,7 @@ import RegisterPage from '../modules/auth/pages/RegisterPage';
 import ProfilePage from '../modules/dashboard/pages/ProfilePage';
 import ProtectedRoute from '../shared/components/ProtectedRoute';
 import ResetPasswordPage from '../modules/auth/pages/ResetPasswordPage';
+import KitchenDashboard from '../modules/kitchen/pages/KitchenDashboard';
 
 export default function AppRoutes() {
   return (
@@ -26,6 +27,14 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute>
             <ResetPasswordPage />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/kitchen" 
+        element={
+          <ProtectedRoute allowedRoles={['cook']}>
+            <KitchenDashboard />
           </ProtectedRoute>
         } 
       />
