@@ -1,3 +1,4 @@
+import { logger } from "../../../shared/services/logger.js";
 import { userRoleService } from "../service/role-service.js";
 
 
@@ -11,7 +12,8 @@ export const userRoleController = async (request,response) =>{
         response.status(200).json({result});
     }
     catch(err){
-        console.log('Error is ',err);
+        // console.log('Error is ',err);
+        logger.error(err);
         response.status(500).json({error: err});
     }
 }

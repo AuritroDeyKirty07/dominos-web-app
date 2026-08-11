@@ -5,13 +5,15 @@ import { profileController } from "../controllers/userProfile-controllers.js";
 import { isAuthMiddleware } from "../../../shared/middleware/auth-middleware.js";
 import {changeUserRoleController, changeUserStatusController, createStaffController, getAllRightsController, getAllRolesController, updateRoleRightsController } from "../controllers/adminCreateStaff-controller.js";
 import { hasRole } from "../../../shared/middleware/rbac-middleware.js";
+import { validatorMiddleware } from "../../../shared/middleware/validator-middleware.js";
+import { loginSchema, registerSchema } from "../validator/authValidator.js";
 
 
 export const authRouter=express.Router();
 
-authRouter.post("/register",registerController);
+authRouter.post("/register",validatorMiddleware(registerSchema),registerController);
 authRouter.post("/role",userRoleController);
-authRouter.post("/login",loginController);
+authRouter.post("/login",validatorMiddleware(loginSchema),loginController);
 authRouter.get("/logout",logoutController);
 authRouter.post("/reset_password", isAuthMiddleware, resetPass);
 authRouter.post("/admin/create-staff", isAuthMiddleware, hasRole(['admin']), createStaffController);
