@@ -5,9 +5,11 @@ import RegisterPage from '../modules/auth/pages/RegisterPage';
 import ProfilePage from '../modules/dashboard/pages/ProfilePage';
 import ProtectedRoute from '../shared/components/ProtectedRoute';
 import ResetPasswordPage from '../modules/auth/pages/ResetPasswordPage';
+<<<<<<< HEAD
 import DeliveryDashboard from '../modules/delivery/pages/DeliveryDashboard';
 import OrderAcceptancePage from '../modules/delivery/pages/OrderAcceptancePage';
 import OutForDeliveryPage from '../modules/delivery/pages/OutForDeliveryPage';
+import KitchenDashboard from '../modules/kitchen/pages/KitchenDashboard';
 
 export default function AppRoutes() {
   return (
@@ -37,6 +39,16 @@ export default function AppRoutes() {
       <Route path="/delivery" element={<DeliveryDashboard />} />
       <Route path="/delivery/accept-order" element={<OrderAcceptancePage />} />
       <Route path="/delivery/out-for-delivery" element={<OutForDeliveryPage />} />
+
+      {/* Kitchen Routes */}
+      <Route 
+        path="/kitchen" 
+        element={
+          <ProtectedRoute allowedRoles={['cook']}>
+            <KitchenDashboard />
+          </ProtectedRoute>
+        } 
+      />
     </Routes>
   );
 }
