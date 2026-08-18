@@ -16,7 +16,8 @@
 .brand-text {
   font-size: 1.8rem;
   font-weight: 900;
-  color: #006491; /* Dominos Blue */
+  color: #006491;
+  /* Dominos Blue */
   letter-spacing: -1px;
   cursor: pointer;
 }
@@ -36,7 +37,8 @@
 }
 
 .nav-link:hover {
-  color: #E31837; /* Dominos Red */
+  color: #E31837;
+  /* Dominos Red */
 }
 
 .nav-btn {
@@ -90,11 +92,14 @@
 /* Mobile responsiveness */
 @media (max-width: 600px) {
   .nav-link {
-    display: none; /* Hide store link on very small screens */
+    display: none;
+    /* Hide store link on very small screens */
   }
+
   .navbar-right {
     gap: 0.5rem;
   }
+
   .nav-btn {
     padding: 0.5rem 0.6rem;
   }
