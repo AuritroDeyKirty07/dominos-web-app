@@ -3,9 +3,8 @@ import { seedDatabase } from "./db-seeder.js";
 
 export const createConnection=async()=>{
     try {
-        const dbUrl = process.env.DB_URL || "mongodb://127.0.0.1:27017/dominos";
-        const conn=await mongoose.connect(dbUrl);
-        console.log("DB is connected",conn.connection.host);
+        const conn=await mongoose.connect(process.env.DB_URL);
+        console.log("DB is connceted",conn.connection.host);
         
         await seedDatabase();
         
@@ -15,3 +14,6 @@ export const createConnection=async()=>{
         
     }
 }
+
+
+

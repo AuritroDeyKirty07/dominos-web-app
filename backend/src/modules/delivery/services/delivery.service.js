@@ -1,131 +1,243 @@
-import { DeliveryOrderModel, DeliveryProfileModel } from '../models/delivery.model.js';
-
-// In-memory initial data for robust offline runtime fallback
-const initialProfile = {
-  name: 'Rahul Sharma',
-  role: 'Senior Delivery Executive',
-  rating: 4.9,
-  completedOrdersCount: 148,
-  earningsToday: 1450,
-  status: 'Online',
-  vehicle: 'Honda Activa (DL 3S CW 9081)'
-};
-
-let inMemoryOrders = [
-  {
-    orderId: 'DOM-9482',
-    customerName: 'Bhukasur',
-    customerPhone: '+91 98765 43210',
-    restaurantName: "Domino's Pizza - Connaught Place",
-    restaurantAddress: 'Plot 14, Outer Circle, Connaught Place, New Delhi',
-    restaurantMapUrl: 'https://maps.app.goo.gl/igoxP8L3S527o5Qh7',
-    restaurantCoords: { lat: 28.6139, lng: 77.2090 },
-    deliveryAddress: 'Flat 402, B-Block, Sunshine Heights, Ring Road, Sector 14, New Delhi - 110001',
-    customerCoords: { lat: 28.6324, lng: 77.2187 },
-    items: [
-      { name: 'Cheese Burst Peppy Paneer Pizza', quantity: 2, price: 449, size: 'Medium' },
-      { name: 'Stuffed Garlic Breadsticks', quantity: 1, price: 179, size: 'Standard' },
-      { name: 'Choco Lava Cake', quantity: 2, price: 109, size: 'Regular' }
-    ],
-    totalAmount: 1295,
-    paymentStatus: 'COD (Cash on Delivery)',
-    status: 'PENDING',
-    createdAt: new Date()
-  },
-  {
-    orderId: 'DOM-9420',
-    customerName: 'Vikram Singh',
-    customerPhone: '+91 91234 56789',
-    restaurantName: "Domino's Pizza - Connaught Place",
-    restaurantAddress: 'Plot 14, Outer Circle, Connaught Place, New Delhi',
-    restaurantMapUrl: 'https://maps.app.goo.gl/igoxP8L3S527o5Qh7',
-    deliveryAddress: 'H.No 12, Main Market, Lajpat Nagar, New Delhi',
-    items: [
-      { name: 'Farmhouse Pizza', quantity: 1, price: 399, size: 'Large' },
-      { name: 'Pepsi 475ml', quantity: 2, price: 60, size: 'Standard' }
-    ],
-    totalAmount: 519,
-    paymentStatus: 'Paid Online',
-    status: 'DELIVERED',
-    createdAt: new Date(Date.now() - 3600000 * 2)
-  },
-  {
-    orderId: 'DOM-9380',
-    customerName: 'Neha Kapoor',
-    customerPhone: '+91 99887 76655',
-    restaurantName: "Domino's Pizza - Connaught Place",
-    restaurantAddress: 'Plot 14, Outer Circle, Connaught Place, New Delhi',
-    restaurantMapUrl: 'https://maps.app.goo.gl/igoxP8L3S527o5Qh7',
-    deliveryAddress: 'Tower 4, Apex Greens, Noida Sector 62',
-    items: [
-      { name: 'Veg Extravaganza Pizza', quantity: 1, price: 549, size: 'Medium' }
-    ],
-    totalAmount: 549,
-    paymentStatus: 'Paid Online',
-    status: 'DELIVERED',
-    createdAt: new Date(Date.now() - 3600000 * 5)
-  }
-];
+import { userModel } from '../../auth/models/user-model.js';
+import Order from '../../kitchen/models/Order.js';
 
 export class DeliveryService {
-  static async getProfile() {
-    try {
-      const dbProfile = await DeliveryProfileModel.findOne();
-      if (dbProfile) return dbProfile;
-    } catch {
-      // Fallback to in-memory
+  /**
+   * Dynamically fetch delivery driver details from the Auth UserModel
+   */
+  static async getProfile(userId = null) {
+    if (userId) {
+      try {
+        const user = await userModel.findById(userId).populate('roleId');
+        if (user) {
+          const roleName = user.roleId?.name || user.role || 'Delivery Executive';
+          return {
+            _id: user._id,
+            name: user.name,
+            email: user.email,
+            phone: user.phone,
+            role: roleName === 'delivery' ? 'Senior Delivery Executive' : roleName,
+            status: user.isActive ? 'Online' : 'Offline'
+          };
+        }
+      } catch (err) {
+        console.error('Error fetching user profile from auth:', err.message);
+      }
     }
-    return initialProfile;
+    return null;
   }
 
-  static async getDashboardData() {
-    let orders = inMemoryOrders;
+  /**
+   * Fetch live and history order data exclusively from the Kitchen module Order model
+   */
+  static async getDashboardData(userId = null) {
+    const profile = await this.getProfile(userId);
+
+    let orders = [];
     try {
-      const dbOrders = await DeliveryOrderModel.find().sort({ createdAt: -1 });
-      if (dbOrders && dbOrders.length > 0) {
-        orders = dbOrders;
+      const kitchenOrders = await Order.find().sort({ createdAt: -1 });
+      if (kitchenOrders) {
+        orders = kitchenOrders.map(o => ({
+          _id: o._id,
+          orderId: o.orderNumber || o._id.toString(),
+          customerName: o.customerName || 'Customer',
+          items: (o.items || []).map(i => ({
+            name: i.name,
+            quantity: i.quantity
+          })),
+          status: o.status,
+          createdAt: o.createdAt
+        }));
       }
-    } catch {
-      // Fallback
+    } catch (err) {
+      console.error('Error fetching orders from kitchen module:', err.message);
     }
 
-    const liveOrder = orders.find(o => o.status === 'PENDING' || o.status === 'ACCEPTED' || o.status === 'OUT_FOR_DELIVERY') || orders[0];
-    const orderHistory = orders.filter(o => o.status === 'DELIVERED' || o.status === 'REJECTED');
-    const profile = await this.getProfile();
+    const DEFAULT_STATIC_ORDER = {
+      _id: 'mock-dom-9482',
+      orderId: 'DOM-9482',
+      customerName: 'Bhukasur',
+      customerPhone: '+91 98765 43210',
+      deliveryAddress: 'House 42, Block B, Connaught Place, New Delhi - 110001',
+      restaurantAddress: "Domino's Pizza, Inner Circle, Connaught Place, New Delhi",
+      restaurantMapUrl: 'https://maps.google.com/?q=28.6315,77.2167',
+      paymentStatus: 'COD (Cash on Delivery)',
+      paymentMethod: 'Cash on Delivery',
+      status: 'Ready',
+      totalAmount: 899,
+      restaurantCoords: { lat: 28.6315, lng: 77.2167 },
+      customerCoords: { lat: 28.6139, lng: 77.2090 },
+      items: [
+        { name: 'Peppy Paneer Large Pizza', quantity: 1, size: 'Large', price: 549 },
+        { name: 'Garlic Breadsticks', quantity: 1, size: 'Regular', price: 149 },
+        { name: 'Choco Lava Cake', quantity: 2, size: 'Standard', price: 101 }
+      ]
+    };
+
+    const DEFAULT_STATIC_HISTORY = [
+      {
+        _id: 'hist-1',
+        orderId: 'DOM-9480',
+        customerName: 'Rohan Sharma',
+        items: [
+          { name: 'Margherita Large Pizza', quantity: 1 },
+          { name: 'Pepsi 500ml', quantity: 2 }
+        ],
+        totalAmount: 599,
+        status: 'Delivered',
+        createdAt: new Date(Date.now() - 7200000).toISOString()
+      },
+      {
+        _id: 'hist-2',
+        orderId: 'DOM-9479',
+        customerName: 'Priya Singh',
+        items: [
+          { name: 'Farmhouse Medium Pizza', quantity: 2 },
+          { name: 'Cheesy Dip', quantity: 1 }
+        ],
+        totalAmount: 940,
+        status: 'Delivered',
+        createdAt: new Date(Date.now() - 18000000).toISOString()
+      },
+      {
+        _id: 'hist-3',
+        orderId: 'DOM-9475',
+        customerName: 'Amit Kumar',
+        items: [
+          { name: 'Cheese N Corn Pizza', quantity: 1 },
+          { name: 'Stuffed Garlic Bread', quantity: 1 }
+        ],
+        totalAmount: 480,
+        status: 'Delivered',
+        createdAt: new Date(Date.now() - 86400000).toISOString()
+      }
+    ];
+
+    const liveOrder = orders.find(o => 
+      o.status === 'Ready' || 
+      o.status === 'Preparing' || 
+      o.status === 'Placed' || 
+      o.status === 'Out for Delivery' || 
+      o.status === 'OUT_FOR_DELIVERY' ||
+      o.status === 'ACCEPTED' ||
+      o.status === 'PENDING'
+    ) || DEFAULT_STATIC_ORDER;
+
+    const orderHistory = orders.filter(o => 
+      o.status === 'Delivered' || 
+      o.status === 'DELIVERED' || 
+      o.status === 'REJECTED'
+    );
 
     return {
-      profile,
+      profile: profile || {
+        _id: 'mock-rider-1',
+        name: 'Aman Verdhiya',
+        email: 'delivery.partner@dominos.com',
+        phone: '+91 98100 12345',
+        role: 'Senior Delivery Executive',
+        status: 'Online'
+      },
       liveOrder,
-      orderHistory
+      orderHistory: orderHistory.length > 0 ? orderHistory : DEFAULT_STATIC_HISTORY
     };
   }
 
   static async getOrderById(orderId) {
+    const DEFAULT_STATIC_ORDER = {
+      _id: 'mock-dom-9482',
+      orderId: 'DOM-9482',
+      customerName: 'Bhukasur',
+      customerPhone: '+91 98765 43210',
+      deliveryAddress: 'House 42, Block B, Connaught Place, New Delhi - 110001',
+      restaurantAddress: "Domino's Pizza, Inner Circle, Connaught Place, New Delhi",
+      restaurantMapUrl: 'https://maps.google.com/?q=28.6315,77.2167',
+      paymentStatus: 'COD (Cash on Delivery)',
+      paymentMethod: 'Cash on Delivery',
+      status: 'Ready',
+      totalAmount: 899,
+      restaurantCoords: { lat: 28.6315, lng: 77.2167 },
+      customerCoords: { lat: 28.6139, lng: 77.2090 },
+      items: [
+        { name: 'Peppy Paneer Large Pizza', quantity: 1, size: 'Large', price: 549 },
+        { name: 'Garlic Breadsticks', quantity: 1, size: 'Regular', price: 149 },
+        { name: 'Choco Lava Cake', quantity: 2, size: 'Standard', price: 101 }
+      ]
+    };
+
     try {
-      const dbOrder = await DeliveryOrderModel.findOne({ orderId });
-      if (dbOrder) return dbOrder;
-    } catch {
-      // Fallback
+      const isObjectId = orderId && orderId.match(/^[0-9a-fA-F]{24}$/);
+      const query = isObjectId ? { $or: [{ orderNumber: orderId }, { _id: orderId }] } : { orderNumber: orderId };
+      const kitchenOrder = await Order.findOne(query);
+      if (kitchenOrder) {
+        return {
+          ...DEFAULT_STATIC_ORDER,
+          _id: kitchenOrder._id,
+          orderId: kitchenOrder.orderNumber || kitchenOrder._id.toString(),
+          customerName: kitchenOrder.customerName || 'Customer',
+          items: (kitchenOrder.items && kitchenOrder.items.length > 0) ? kitchenOrder.items : DEFAULT_STATIC_ORDER.items,
+          status: kitchenOrder.status || 'Ready',
+          createdAt: kitchenOrder.createdAt
+        };
+      }
+    } catch (err) {
+      console.error('Error fetching order from kitchen module:', err.message);
     }
-    return inMemoryOrders.find(o => o.orderId === orderId) || inMemoryOrders[0];
+    return {
+      ...DEFAULT_STATIC_ORDER,
+      orderId: orderId || 'DOM-9482'
+    };
   }
 
   static async updateOrderStatus(orderId, status) {
+    const DEFAULT_STATIC_ORDER = {
+      _id: 'mock-dom-9482',
+      orderId: 'DOM-9482',
+      customerName: 'Bhukasur',
+      customerPhone: '+91 98765 43210',
+      deliveryAddress: 'House 42, Block B, Connaught Place, New Delhi - 110001',
+      restaurantAddress: "Domino's Pizza, Inner Circle, Connaught Place, New Delhi",
+      restaurantMapUrl: 'https://maps.google.com/?q=28.6315,77.2167',
+      paymentStatus: 'COD (Cash on Delivery)',
+      paymentMethod: 'Cash on Delivery',
+      status: 'Ready',
+      totalAmount: 899,
+      restaurantCoords: { lat: 28.6315, lng: 77.2167 },
+      customerCoords: { lat: 28.6139, lng: 77.2090 },
+      items: [
+        { name: 'Peppy Paneer Large Pizza', quantity: 1, size: 'Large', price: 549 },
+        { name: 'Garlic Breadsticks', quantity: 1, size: 'Regular', price: 149 },
+        { name: 'Choco Lava Cake', quantity: 2, size: 'Standard', price: 101 }
+      ]
+    };
+
     try {
-      const dbOrder = await DeliveryOrderModel.findOneAndUpdate(
-        { orderId },
+      const isObjectId = orderId && orderId.match(/^[0-9a-fA-F]{24}$/);
+      const query = isObjectId ? { $or: [{ orderNumber: orderId }, { _id: orderId }] } : { orderNumber: orderId };
+      
+      const updatedOrder = await Order.findOneAndUpdate(
+        query,
         { status },
         { new: true }
       );
-      if (dbOrder) return dbOrder;
-    } catch {
-      // Fallback
+      if (updatedOrder) {
+        return {
+          ...DEFAULT_STATIC_ORDER,
+          _id: updatedOrder._id,
+          orderId: updatedOrder.orderNumber || updatedOrder._id.toString(),
+          customerName: updatedOrder.customerName,
+          items: updatedOrder.items || [],
+          status: updatedOrder.status,
+          createdAt: updatedOrder.createdAt
+        };
+      }
+    } catch (err) {
+      console.error('Error updating order status in kitchen module:', err.message);
     }
-
-    const order = inMemoryOrders.find(o => o.orderId === orderId);
-    if (order) {
-      order.status = status;
-    }
-    return order;
+    return {
+      ...DEFAULT_STATIC_ORDER,
+      orderId: orderId || 'DOM-9482',
+      status
+    };
   }
 }

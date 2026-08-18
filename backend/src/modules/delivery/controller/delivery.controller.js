@@ -2,7 +2,7 @@ import { DeliveryService } from '../services/delivery.service.js';
 
 export const getProfile = async (req, res) => {
   try {
-    const profile = await DeliveryService.getProfile();
+    const profile = await DeliveryService.getProfile(req.userId);
     res.json({ success: true, data: profile });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -11,7 +11,7 @@ export const getProfile = async (req, res) => {
 
 export const getDashboard = async (req, res) => {
   try {
-    const data = await DeliveryService.getDashboardData();
+    const data = await DeliveryService.getDashboardData(req.userId);
     res.json({ success: true, data });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });
@@ -21,7 +21,7 @@ export const getDashboard = async (req, res) => {
 export const getOrderById = async (req, res) => {
   try {
     const { id } = req.params;
-    const order = await DeliveryService.getOrderById(id);
+    const order = await DeliveryService.getOrderById(id, req.userId);
     if (!order) {
       return res.status(404).json({ success: false, message: 'Order not found' });
     }
@@ -35,7 +35,7 @@ export const updateOrderStatus = async (req, res) => {
   try {
     const { id } = req.params;
     const { status } = req.body;
-    const order = await DeliveryService.updateOrderStatus(id, status);
+    const order = await DeliveryService.updateOrderStatus(id, status, req.userId);
     res.json({ success: true, data: order });
   } catch (error) {
     res.status(500).json({ success: false, message: error.message });

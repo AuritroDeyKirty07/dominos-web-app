@@ -44,7 +44,7 @@ const deliveryProfileSchema = new mongoose.Schema({
   completedOrdersCount: { type: Number, default: 148 },
   earningsToday: { type: Number, default: 1450 },
   status: { type: String, default: 'Online' },
-  // vehicle: { type: String, default: 'Honda Activa (DL 3S CW 9081)' }
+  vehicle: { type: String, default: 'Honda Activa (DL 3S CW 9081)' }
 });
 
 export const DeliveryOrderModel = mongoose.models.DeliveryOrder || mongoose.model('DeliveryOrder', deliveryOrderSchema);
