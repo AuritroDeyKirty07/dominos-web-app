@@ -13,7 +13,7 @@ export const getProfileService = async (userId) => {
 };
 
 export const updateProfileService = async (userId, userData) => {
-  const { name, phone, address } = userData;
+  const { name, phone, address, email } = userData;
 
   const updatedUser = await userModel.findByIdAndUpdate(
     userId,
@@ -21,6 +21,7 @@ export const updateProfileService = async (userId, userData) => {
       name,
       phone,
       address,
+      email,
     },
     {
       new: true,
