@@ -10,6 +10,9 @@ import DeliveryDashboard from '../modules/delivery/pages/DeliveryDashboard';
 import OrderAcceptancePage from '../modules/delivery/pages/OrderAcceptancePage';
 import OutForDeliveryPage from '../modules/delivery/pages/OutForDeliveryPage';
 import KitchenDashboard from '../modules/kitchen/pages/KitchenDashboard';
+import DeliveryDashboard from '../modules/delivery/pages/DeliveryDashboard';
+import OrderAcceptancePage from '../modules/delivery/pages/OrderAcceptancePage';
+import OutForDeliveryPage from '../modules/delivery/pages/OutForDeliveryPage';
 
 export default function AppRoutes() {
   return (
@@ -56,6 +59,30 @@ export default function AppRoutes() {
             <KitchenDashboard />
           </ProtectedRoute>
         }
+      />
+      <Route 
+        path="/delivery" 
+        element={
+          <ProtectedRoute allowedRoles={['delivery']}>
+            <DeliveryDashboard />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/delivery/accept-order" 
+        element={
+          <ProtectedRoute allowedRoles={['delivery']}>
+            <OrderAcceptancePage />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/delivery/out-for-delivery" 
+        element={
+          <ProtectedRoute allowedRoles={['delivery']}>
+            <OutForDeliveryPage />
+          </ProtectedRoute>
+        } 
       />
     </Routes>
   );

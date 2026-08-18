@@ -28,6 +28,7 @@ app.use("/api/v1", profileRouter);
 
 app.use("/api/delivery", deliveryRoutes);
 app.use("/api/kitchen", kitchenRoutes);
+app.use("/api/delivery", deliveryRoutes);
 
 
 const promise = createConnection();
