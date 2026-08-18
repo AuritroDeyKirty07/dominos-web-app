@@ -8,34 +8,39 @@ import cors from "cors";
 import { authRouter } from "./modules/auth/routes/userRoute.js";
 import { isAuthMiddleware } from "./shared/middleware/auth-middleware.js";
 import { profileRouter } from "./modules/auth/routes/profileRoutes.js";
+import kitchenRoutes from "./modules/kitchen/routes/kitchenRoutes.js";
+import deliveryRoutes from "./modules/delivery/routes/delivery.routes.js";
 dotenv.config();
 
-const PORT=5000;
 
-const app=express();
+const PORT = 5000;
+
+const app = express();
 
 app.use(cors({
-    origin: true, 
-    credentials: true 
+    origin: true,
+    credentials: true
 }));
 app.use(express.json());
 app.use(cookieParser());
-app.use("/api/v1",authRouter);
-app.use("/api/v1",profileRouter)
+app.use("/api/v1", authRouter);
+app.use("/api/v1", profileRouter);
+
+app.use("/api/delivery", deliveryRoutes);
+app.use("/api/kitchen", kitchenRoutes);
+app.use("/api/delivery", deliveryRoutes);
 
 
-const promise=createConnection();
+const promise = createConnection();
 
-promise.then((data)=>{
+promise.then((data) => {
 
-app.listen(PORT,()=>{
-    console.log(`Server is running on http://localhost:${PORT}`);
+    app.listen(PORT, () => {
+        console.log(`Server is running on http://localhost:${PORT}`);
+    })
+
+}).catch((err) => {
+    console.log(err);
+    process.exit(0);
+
 })
-
-}).catch((err)=>{
-console.log(err);
-process.exit(0);
-
-})
-
-

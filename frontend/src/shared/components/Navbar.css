@@ -9,17 +9,15 @@
   align-items: center;
   padding: 0 5%;
   z-index: 1000;
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
+  background: #ffffff;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.05);
 }
 
 .brand-text {
   font-size: 1.8rem;
   font-weight: 900;
-  color: #006491; /* Dominos Blue */
+  color: #006491;
+  /* Dominos Blue */
   letter-spacing: -1px;
   cursor: pointer;
 }
@@ -39,7 +37,8 @@
 }
 
 .nav-link:hover {
-  color: #E31837; /* Dominos Red */
+  color: #E31837;
+  /* Dominos Red */
 }
 
 .nav-btn {
@@ -93,11 +92,14 @@
 /* Mobile responsiveness */
 @media (max-width: 600px) {
   .nav-link {
-    display: none; /* Hide store link on very small screens */
+    display: none;
+    /* Hide store link on very small screens */
   }
+
   .navbar-right {
     gap: 0.5rem;
   }
+
   .nav-btn {
     padding: 0.5rem 0.6rem;
   }
