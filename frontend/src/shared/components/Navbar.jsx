@@ -21,7 +21,7 @@ export default function Navbar() {
       
       <div className="navbar-right">
         {role !== 'cook' && role !== 'delivery' && <Link to="/store" className="nav-link">Store</Link>}
-        {role !== 'cook' && role !== 'delivery' && <Link to="/cart" className="nav-link">Cart</Link>}
+        {isLoggedIn && role === 'customer' && <Link to="/cart" className="nav-link">Cart</Link>}
         {role === 'cook' && <Link to="/kitchen" className="nav-link">Dashboard</Link>}
         {role === 'delivery' && <Link to="/delivery" className="nav-link">Dashboard</Link>}
         {!isLoggedIn && (
