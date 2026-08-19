@@ -1,5 +1,5 @@
 import * as couponService from '../services/couponService.js';
-import { successResponse, errorResponse } from '../services/apiResponse.js';
+import { successResponse, errorResponse } from '../utils/apiResponse.js';
 
 export const getCoupons = async (req, res, next) => {
   try {

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useCart } from '../services/useCart.js';
-import { useCustomer } from '../services/useCustomer.js';
-import { useOrders } from '../services/useOrders.js';
+import { useCart } from '../hooks/useCart.js';
+import { useCustomer } from '../hooks/useCustomer.js';
+import { useOrders } from '../hooks/useOrders.js';
 import { AddressCard } from '../components/address/AddressCard.jsx';
 import { AddressModal } from '../components/address/AddressModal.jsx';
 import { Button } from '../components/common/Button.jsx';
-import { formatCurrency } from '../services/formatters.js';
+import { formatCurrency } from '../utils/formatters.js';
 import { OrderItemSummary } from '../components/order/OrderItemSummary.jsx';
 import {
   MapPin,
@@ -568,4 +568,3 @@ export const CheckoutPage = () => {
     </div>
   );
 };
-

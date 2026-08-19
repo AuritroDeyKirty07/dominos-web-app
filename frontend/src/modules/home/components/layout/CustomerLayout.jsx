@@ -1,8 +1,8 @@
 import React from 'react';
 import { Outlet, useLocation, Link } from 'react-router-dom';
 import { Footer } from './Footer.jsx';
-import { useCart } from '../../services/useCart.js';
-import { formatCurrency } from '../../services/formatters.js';
+import { useCart } from '../../hooks/useCart.js';
+import { formatCurrency } from '../../utils/formatters.js';
 import { ShoppingBag, ArrowRight } from 'lucide-react';
 
 export const CustomerLayout = () => {
@@ -48,4 +48,3 @@ export const CustomerLayout = () => {
     </div>
   );
 };
-

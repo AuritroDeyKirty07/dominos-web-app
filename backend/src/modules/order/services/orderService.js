@@ -2,7 +2,7 @@ import { CustomerOrder } from '../models/CustomerOrder.js';
 import KitchenOrder from '../../kitchen/models/Order.js';
 import { userModel } from '../../auth/models/user-model.js';
 import { calculateCartTotals, calculateVerifiedItemUnitPrice } from './cartService.js';
-import { ORDER_STATUS } from './constants.js';
+import { ORDER_STATUS } from '../utils/constants.js';
 
 // Status mapping helper: Kitchen Status -> Customer Status
 const mapKitchenStatusToCustomer = (kitchenStatus) => {

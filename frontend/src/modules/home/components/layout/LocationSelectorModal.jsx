@@ -1,6 +1,6 @@
 import React from 'react';
 import { Modal } from '../common/Modal.jsx';
-import { useCustomer } from '../../services/useCustomer.js';
+import { useCustomer } from '../../hooks/useCustomer.js';
 import { MapPin, Bike, Store, CheckCircle, Plus } from 'lucide-react';
 import { Button } from '../common/Button.jsx';
 import { useNavigate } from 'react-router-dom';
@@ -137,4 +137,3 @@ export const LocationSelectorModal = ({ isOpen, onClose }) => {
     </Modal>
   );
 };
-

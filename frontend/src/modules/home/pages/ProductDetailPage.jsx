@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { getMenuItemById, getMenuItems } from '../services/menuService.js';
-import { useCart } from '../services/useCart.js';
+import { useCart } from '../hooks/useCart.js';
 import { VegBadge } from '../components/common/VegBadge.jsx';
 import { Badge } from '../components/common/Badge.jsx';
 import { Button } from '../components/common/Button.jsx';
 import { Spinner } from '../components/common/Spinner.jsx';
 import { ProductCard } from '../components/menu/ProductCard.jsx';
-import { formatCurrency } from '../services/formatters.js';
+import { formatCurrency } from '../utils/formatters.js';
 import {
   Star,
   Pizza,
@@ -394,4 +394,3 @@ export const ProductDetailPage = () => {
     </div>
   );
 };
-

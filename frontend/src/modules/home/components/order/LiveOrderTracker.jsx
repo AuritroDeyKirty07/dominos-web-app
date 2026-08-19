@@ -10,7 +10,7 @@ import {
   Store,
   Sparkles,
 } from 'lucide-react';
-import { formatDate } from '../../services/formatters.js';
+import { formatDate } from '../../utils/formatters.js';
 
 const TRACKING_STAGES = [
   {
@@ -211,4 +211,3 @@ export const LiveOrderTracker = ({ order }) => {
     </div>
   );
 };
-

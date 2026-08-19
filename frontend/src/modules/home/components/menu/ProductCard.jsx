@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { VegBadge } from '../common/VegBadge.jsx';
 import { Badge } from '../common/Badge.jsx';
 import { Button } from '../common/Button.jsx';
-import { formatCurrency } from '../../services/formatters.js';
-import { useCart } from '../../services/useCart.js';
+import { formatCurrency } from '../../utils/formatters.js';
+import { useCart } from '../../hooks/useCart.js';
 import { PizzaCustomizerModal } from './PizzaCustomizerModal.jsx';
 import { Star, Plus, SlidersHorizontal, Check } from 'lucide-react';
 
@@ -132,4 +132,3 @@ export const ProductCard = ({ product }) => {
     </>
   );
 };
-

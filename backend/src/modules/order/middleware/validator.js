@@ -1,4 +1,4 @@
-import { errorResponse } from '../services/apiResponse.js';
+import { errorResponse } from '../utils/apiResponse.js';
 
 export const validateAddress = (req, res, next) => {
   const { name, phone, addressLine1, city, state, pinCode } = req.body;

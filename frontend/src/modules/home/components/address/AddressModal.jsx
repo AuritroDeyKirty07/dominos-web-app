@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal } from '../common/Modal.jsx';
 import { Input } from '../common/Input.jsx';
 import { Button } from '../common/Button.jsx';
-import { validatePhone, validatePinCode } from '../../services/validators.js';
+import { validatePhone, validatePinCode } from '../../utils/validators.js';
 import { Home, Briefcase, Bookmark, MapPin } from 'lucide-react';
 
 export const AddressModal = ({ isOpen, onClose, onSave }) => {
@@ -212,4 +212,3 @@ export const AddressModal = ({ isOpen, onClose, onSave }) => {
     </Modal>
   );
 };
-

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useCart } from '../services/useCart.js';
-import { useCustomer } from '../services/useCustomer.js';
+import { useCart } from '../hooks/useCart.js';
+import { useCustomer } from '../hooks/useCustomer.js';
 import { Button } from '../components/common/Button.jsx';
 import { VegBadge } from '../components/common/VegBadge.jsx';
 import { EmptyState } from '../components/common/EmptyState.jsx';
-import { formatCurrency } from '../services/formatters.js';
+import { formatCurrency } from '../utils/formatters.js';
 import {
   ShoppingBag,
   Trash2,
@@ -365,4 +365,3 @@ export const CartPage = () => {
     </div>
   );
 };
-

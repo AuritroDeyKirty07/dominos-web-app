@@ -19,4 +19,3 @@ export const updatePaymentStatus = async (orderId, paymentStatus, transactionId 
   const res = await axiosInstance.put(`/orders/${orderId}/payment`, { paymentStatus, transactionId });
   return res.data.data;
 };
-

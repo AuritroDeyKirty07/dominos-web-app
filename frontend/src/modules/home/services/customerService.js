@@ -29,4 +29,3 @@ export const setDefaultAddress = async (addressId) => {
   const res = await axiosInstance.put(`/customers/addresses/${addressId}/default`);
   return res.data.data;
 };
-

@@ -12,4 +12,3 @@ export const validatePinCode = (pin) => {
   const cleaned = ('' + pin).replace(/\D/g, '');
   return cleaned.length === 6;
 };
-

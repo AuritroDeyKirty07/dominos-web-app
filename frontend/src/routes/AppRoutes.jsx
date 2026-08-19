@@ -7,10 +7,14 @@ import ProtectedRoute from '../shared/components/ProtectedRoute';
 import ResetPasswordPage from '../modules/auth/pages/ResetPasswordPage';
 import KitchenDashboard from '../modules/kitchen/pages/KitchenDashboard';
 
+import DeliveryDashboard from '../modules/delivery/pages/DeliveryDashboard';
+import OrderAcceptancePage from '../modules/delivery/pages/OrderAcceptancePage';
+import OutForDeliveryPage from '../modules/delivery/pages/OutForDeliveryPage';
+
 // Customer Provider & Layout Imports
-import { CustomerProvider } from '../modules/home/services/CustomerContext.jsx';
-import { CartProvider } from '../modules/home/services/CartContext.jsx';
-import { OrderProvider } from '../modules/home/services/OrderContext.jsx';
+import { CustomerProvider } from '../modules/home/store/CustomerContext.jsx';
+import { CartProvider } from '../modules/home/store/CartContext.jsx';
+import { OrderProvider } from '../modules/home/store/OrderContext.jsx';
 import { CustomerLayout } from '../modules/home/components/layout/CustomerLayout.jsx';
 
 // Customer Pages Imports
@@ -32,7 +36,7 @@ export default function AppRoutes() {
     <Routes>
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
-      
+
       {/* Customer Routes */}
       <Route
         element={
@@ -61,27 +65,55 @@ export default function AppRoutes() {
         <Route path="/addresses" element={<AddressManagementPage />} />
       </Route>
 
-      <Route 
-        path="/profile" 
+      <Route
+        path="/profile"
         element={
           <ProtectedRoute>
             <ProfilePage />
           </ProtectedRoute>
-        } 
+        }
       />
-      <Route 
-        path="/profile/reset-password" 
+      <Route
+        path="/profile/reset-password"
         element={
           <ProtectedRoute>
             <ResetPasswordPage />
           </ProtectedRoute>
-        } 
+        }
       />
-      <Route 
-        path="/kitchen" 
+
+      {/* Kitchen Routes */}
+      <Route
+        path="/kitchen"
         element={
           <ProtectedRoute allowedRoles={['cook']}>
             <KitchenDashboard />
+          </ProtectedRoute>
+        }
+      />
+
+      {/* Delivery Routes */}
+      <Route 
+        path="/delivery" 
+        element={
+          <ProtectedRoute allowedRoles={['delivery']}>
+            <DeliveryDashboard />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/delivery/accept-order" 
+        element={
+          <ProtectedRoute allowedRoles={['delivery']}>
+            <OrderAcceptancePage />
+          </ProtectedRoute>
+        } 
+      />
+      <Route 
+        path="/delivery/out-for-delivery" 
+        element={
+          <ProtectedRoute allowedRoles={['delivery']}>
+            <OutForDeliveryPage />
           </ProtectedRoute>
         } 
       />

@@ -93,4 +93,3 @@ export const validateCoupon = (code, cartSubtotal) => {
     message: `Coupon '${offer.code}' applied! You saved ₹${Math.round(discount)}.`,
   };
 };
-

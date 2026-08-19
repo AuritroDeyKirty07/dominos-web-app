@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as orderController from '../controllers/orderController.js';
-import { validateOrder } from './validator.js';
+import { validateOrder } from '../middleware/validator.js';
 import { isAuthMiddleware } from '../../../shared/middleware/auth-middleware.js';
 import { hasRole } from '../../../shared/middleware/rbac-middleware.js';
 

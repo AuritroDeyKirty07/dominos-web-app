@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useCustomer } from '../../services/useCustomer.js';
-import { useCart } from '../../services/useCart.js';
-import { useOrders } from '../../services/useOrders.js';
+import { useCustomer } from '../../hooks/useCustomer.js';
+import { useCart } from '../../hooks/useCart.js';
+import { useOrders } from '../../hooks/useOrders.js';
 import { LocationSelectorModal } from './LocationSelectorModal.jsx';
-import { formatCurrency } from '../../services/formatters.js';
+import { formatCurrency } from '../../utils/formatters.js';
 import {
   Pizza,
   ShoppingBag,
@@ -263,4 +263,3 @@ export const Navbar = () => {
     </>
   );
 };
-

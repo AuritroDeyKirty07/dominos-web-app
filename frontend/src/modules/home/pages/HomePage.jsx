@@ -7,7 +7,7 @@ import { CategoryBar } from '../components/menu/CategoryBar.jsx';
 import { Button } from '../components/common/Button.jsx';
 import { Badge } from '../components/common/Badge.jsx';
 import { Spinner } from '../components/common/Spinner.jsx';
-import { useCustomer } from '../services/useCustomer.js';
+import { useCustomer } from '../hooks/useCustomer.js';
 import {
   Pizza,
   ArrowRight,
@@ -320,4 +320,3 @@ export const HomePage = () => {
     </div>
   );
 };
-

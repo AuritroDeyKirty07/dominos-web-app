@@ -1,5 +1,5 @@
 import * as cartService from '../services/cartService.js';
-import { successResponse, errorResponse } from '../services/apiResponse.js';
+import { successResponse, errorResponse } from '../utils/apiResponse.js';
 
 export const getCart = async (req, res, next) => {
   try {

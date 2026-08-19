@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore.js';
-import { CartContext } from '../../modules/home/services/CartContext.jsx';
-import { CustomerContext } from '../../modules/home/services/CustomerContext.jsx';
+import { CartContext } from '../../modules/home/store/CartContext.jsx';
+import { CustomerContext } from '../../modules/home/store/CustomerContext.jsx';
 import { LocationSelectorModal } from '../../modules/home/components/layout/LocationSelectorModal.jsx';
 import { Pizza, ShoppingBag, MapPin, ChevronDown, Award } from 'lucide-react';
 import './Navbar.css';

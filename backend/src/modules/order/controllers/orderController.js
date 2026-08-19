@@ -1,5 +1,5 @@
 import * as orderService from '../services/orderService.js';
-import { successResponse, errorResponse } from '../services/apiResponse.js';
+import { successResponse, errorResponse } from '../utils/apiResponse.js';
 
 export const createOrder = async (req, res, next) => {
   try {

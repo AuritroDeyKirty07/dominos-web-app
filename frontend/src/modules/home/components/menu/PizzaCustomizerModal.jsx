@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Modal } from '../common/Modal.jsx';
 import { Button } from '../common/Button.jsx';
 import { VegBadge } from '../common/VegBadge.jsx';
-import { formatCurrency } from '../../services/formatters.js';
-import { useCart } from '../../services/useCart.js';
+import { formatCurrency } from '../../utils/formatters.js';
+import { useCart } from '../../hooks/useCart.js';
 import { Plus, Minus, Check, Sparkles, Pizza, ChevronRight } from 'lucide-react';
 
 export const PizzaCustomizerModal = ({ isOpen, onClose, product }) => {
@@ -320,4 +320,3 @@ export const PizzaCustomizerModal = ({ isOpen, onClose, product }) => {
     </Modal>
   );
 };
-

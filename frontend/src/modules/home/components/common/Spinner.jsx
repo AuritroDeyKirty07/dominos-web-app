@@ -19,4 +19,3 @@ export const Spinner = ({ size = 'md', color = 'text-dominos-blue', className = 
     </div>
   );
 };
-

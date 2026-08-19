@@ -1,6 +1,6 @@
 import React from 'react';
 import { VegBadge } from '../common/VegBadge.jsx';
-import { formatCurrency } from '../../services/formatters.js';
+import { formatCurrency } from '../../utils/formatters.js';
 
 export const OrderItemSummary = ({ item }) => {
   const custom = item.customization;
@@ -44,4 +44,3 @@ export const OrderItemSummary = ({ item }) => {
     </div>
   );
 };
-

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getOffers } from '../services/offersService.js';
-import { useCart } from '../services/useCart.js';
+import { useCart } from '../hooks/useCart.js';
 import { Button } from '../components/common/Button.jsx';
 import { Badge } from '../components/common/Badge.jsx';
 import { Spinner } from '../components/common/Spinner.jsx';
-import { formatCurrency } from '../services/formatters.js';
+import { formatCurrency } from '../utils/formatters.js';
 import {
   Tag,
   Copy,
@@ -152,4 +152,3 @@ export const OffersPage = () => {
     </div>
   );
 };
-

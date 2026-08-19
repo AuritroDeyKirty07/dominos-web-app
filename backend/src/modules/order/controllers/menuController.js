@@ -1,5 +1,5 @@
 import * as menuService from '../services/menuService.js';
-import { successResponse, errorResponse } from '../services/apiResponse.js';
+import { successResponse, errorResponse } from '../utils/apiResponse.js';
 
 export const getCategories = async (req, res, next) => {
   try {

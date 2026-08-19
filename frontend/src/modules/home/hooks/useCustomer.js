@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { CustomerContext } from '../services/CustomerContext.jsx';
+import { CustomerContext } from '../store/CustomerContext.jsx';
 
 export const useCustomer = () => {
   const context = useContext(CustomerContext);
@@ -8,4 +8,3 @@ export const useCustomer = () => {
   }
   return context;
 };
-

@@ -1,5 +1,5 @@
 import * as customerService from '../services/customerService.js';
-import { successResponse, errorResponse } from '../services/apiResponse.js';
+import { successResponse, errorResponse } from '../utils/apiResponse.js';
 
 export const getProfile = async (req, res, next) => {
   try {

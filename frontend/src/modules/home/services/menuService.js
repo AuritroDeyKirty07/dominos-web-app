@@ -14,4 +14,3 @@ export const getMenuItemById = async (id) => {
   const res = await axiosInstance.get(`/menu/items/${id}`);
   return res.data.data;
 };
-

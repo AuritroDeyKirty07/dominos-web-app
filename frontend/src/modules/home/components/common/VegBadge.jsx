@@ -33,4 +33,3 @@ export const VegBadge = ({ isVeg, size = 'md' }) => {
     </span>
   );
 };
-

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useOrders } from '../services/useOrders.js';
-import { useCart } from '../services/useCart.js';
+import { useOrders } from '../hooks/useOrders.js';
+import { useCart } from '../hooks/useCart.js';
 import { OrderItemSummary } from '../components/order/OrderItemSummary.jsx';
 import { Button } from '../components/common/Button.jsx';
 import { Badge } from '../components/common/Badge.jsx';
 import { Spinner } from '../components/common/Spinner.jsx';
-import { formatCurrency, formatDate } from '../services/formatters.js';
+import { formatCurrency, formatDate } from '../utils/formatters.js';
 import {
   ArrowLeft,
   MapPin,
@@ -203,4 +203,3 @@ export const OrderDetailPage = () => {
     </div>
   );
 };
-

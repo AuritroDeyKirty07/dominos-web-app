@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useCustomer } from '../services/useCustomer.js';
+import { useCustomer } from '../hooks/useCustomer.js';
 import { AddressCard } from '../components/address/AddressCard.jsx';
 import { AddressModal } from '../components/address/AddressModal.jsx';
 import { Button } from '../components/common/Button.jsx';
@@ -133,4 +133,3 @@ export const AddressManagementPage = () => {
     </div>
   );
 };
-

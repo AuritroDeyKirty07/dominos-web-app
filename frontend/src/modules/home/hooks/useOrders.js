@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { OrderContext } from '../services/OrderContext.jsx';
+import { OrderContext } from '../store/OrderContext.jsx';
 
 export const useOrders = () => {
   const context = useContext(OrderContext);
@@ -8,4 +8,3 @@ export const useOrders = () => {
   }
   return context;
 };
-

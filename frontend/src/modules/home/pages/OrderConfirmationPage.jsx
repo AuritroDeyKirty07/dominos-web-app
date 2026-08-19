@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
-import { useOrders } from '../services/useOrders.js';
+import { useOrders } from '../hooks/useOrders.js';
 import { Button } from '../components/common/Button.jsx';
 import { Spinner } from '../components/common/Spinner.jsx';
-import { formatCurrency, formatDate } from '../services/formatters.js';
+import { formatCurrency, formatDate } from '../utils/formatters.js';
 import { OrderItemSummary } from '../components/order/OrderItemSummary.jsx';
 import {
   CheckCircle2,
@@ -194,4 +194,3 @@ export const OrderConfirmationPage = () => {
     </div>
   );
 };
-
