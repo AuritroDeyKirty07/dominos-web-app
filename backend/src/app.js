@@ -9,6 +9,7 @@ import { authRouter } from "./modules/auth/routes/userRoute.js";
 import { isAuthMiddleware } from "./shared/middleware/auth-middleware.js";
 import { profileRouter } from "./modules/auth/routes/profileRoutes.js";
 import kitchenRoutes from "./modules/kitchen/routes/kitchenRoutes.js";
+import orderRouter from "./modules/order/routes/index.js";
 dotenv.config();
 
 const PORT=5000;
@@ -24,6 +25,8 @@ app.use(cookieParser());
 app.use("/api/v1",authRouter);
 app.use("/api/v1",profileRouter);
 app.use("/api/kitchen", kitchenRoutes);
+app.use("/api", orderRouter);
+app.use("/api/v1", orderRouter);
 
 
 const promise=createConnection();

@@ -7,13 +7,60 @@ import ProtectedRoute from '../shared/components/ProtectedRoute';
 import ResetPasswordPage from '../modules/auth/pages/ResetPasswordPage';
 import KitchenDashboard from '../modules/kitchen/pages/KitchenDashboard';
 
+// Customer Provider & Layout Imports
+import { CustomerProvider } from '../modules/home/services/CustomerContext.jsx';
+import { CartProvider } from '../modules/home/services/CartContext.jsx';
+import { OrderProvider } from '../modules/home/services/OrderContext.jsx';
+import { CustomerLayout } from '../modules/home/components/layout/CustomerLayout.jsx';
+
+// Customer Pages Imports
+import { HomePage } from '../modules/home/pages/HomePage.jsx';
+import { MenuPage } from '../modules/home/pages/MenuPage.jsx';
+import { CategoriesPage } from '../modules/home/pages/CategoriesPage.jsx';
+import { OffersPage } from '../modules/home/pages/OffersPage.jsx';
+import { ProductDetailPage } from '../modules/home/pages/ProductDetailPage.jsx';
+import { CartPage } from '../modules/home/pages/CartPage.jsx';
+import { CheckoutPage } from '../modules/home/pages/CheckoutPage.jsx';
+import { OrderConfirmationPage } from '../modules/home/pages/OrderConfirmationPage.jsx';
+import { OrderHistoryPage } from '../modules/home/pages/OrderHistoryPage.jsx';
+import { OrderDetailPage } from '../modules/home/pages/OrderDetailPage.jsx';
+import { OrderTrackingPage } from '../modules/home/pages/OrderTrackingPage.jsx';
+import { AddressManagementPage } from '../modules/home/pages/AddressManagementPage.jsx';
+
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/login" replace />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
       
+      {/* Customer Routes */}
+      <Route
+        element={
+          <ProtectedRoute allowedRoles={['customer']}>
+            <CustomerProvider>
+              <CartProvider>
+                <OrderProvider>
+                  <CustomerLayout />
+                </OrderProvider>
+              </CartProvider>
+            </CustomerProvider>
+          </ProtectedRoute>
+        }
+      >
+        <Route path="/" element={<HomePage />} />
+        <Route path="/menu" element={<MenuPage />} />
+        <Route path="/categories" element={<CategoriesPage />} />
+        <Route path="/offers" element={<OffersPage />} />
+        <Route path="/product/:id" element={<ProductDetailPage />} />
+        <Route path="/cart" element={<CartPage />} />
+        <Route path="/checkout" element={<CheckoutPage />} />
+        <Route path="/order-confirmation/:orderId" element={<OrderConfirmationPage />} />
+        <Route path="/orders" element={<OrderHistoryPage />} />
+        <Route path="/orders/:orderId" element={<OrderDetailPage />} />
+        <Route path="/orders/:orderId/track" element={<OrderTrackingPage />} />
+        <Route path="/addresses" element={<AddressManagementPage />} />
+      </Route>
+
       <Route 
         path="/profile" 
         element={
@@ -38,6 +85,7 @@ export default function AppRoutes() {
           </ProtectedRoute>
         } 
       />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }
