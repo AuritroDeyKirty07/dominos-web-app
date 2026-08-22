@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { deliveryApi, fetchIpLocation } from '../services/deliveryApi';
 import MapView from '../components/MapView';
 import SlideButton from '../components/SlideButton';
@@ -10,6 +10,7 @@ import {
 
 export default function OutForDeliveryPage() {
   const navigate = useNavigate();
+  const { orderId } = useParams();
   const [order, setOrder] = useState(null);
   const [ipData, setIpData] = useState(null);
   const [riderCoords, setRiderCoords] = useState({ lat: 28.6210, lng: 77.2140 });
@@ -19,7 +20,7 @@ export default function OutForDeliveryPage() {
 
   useEffect(() => {
     async function loadData() {
-      const orderData = await deliveryApi.getOrderById('DOM-9482');
+      const orderData = await deliveryApi.getOrderById(orderId);
       const ip = await fetchIpLocation();
 
       setOrder(orderData);
@@ -58,7 +59,7 @@ export default function OutForDeliveryPage() {
   }, [order]);
 
   const handleMarkDelivered = async () => {
-    await deliveryApi.updateOrderStatus('DOM-9482', 'DELIVERED');
+    await deliveryApi.updateOrderStatus(orderId, 'DELIVERED');
     setIsDeliveredModalOpen(true);
   };
 
@@ -120,7 +121,7 @@ export default function OutForDeliveryPage() {
                   <Navigation className="w-6 h-6 text-blue-600 animate-pulse shrink-0" /> Live Route Tracking Map
                 </h3>
                 <span className="text-xs sm:text-sm text-blue-700 font-bold bg-blue-50 px-3.5 py-1.5 rounded-xl border border-blue-200 shrink-0">
-                  Destination: Bhukasur
+                  Destination: {order.customerName}
                 </span>
               </div>
 
@@ -131,6 +132,9 @@ export default function OutForDeliveryPage() {
                   riderCoords={riderCoords}
                   ipData={ipData}
                   mode="tracking"
+                  customerName={order.customerName}
+                  deliveryAddress={order.deliveryAddress}
+                  paymentMethod={order.paymentMethod}
                 />
               </div>
             </section>
@@ -215,7 +219,7 @@ export default function OutForDeliveryPage() {
             <div className="space-y-2">
               <h3 className="text-2xl sm:text-3xl font-black text-slate-900">Delivery Completed!</h3>
               <p className="text-sm font-semibold text-slate-600">
-                Order DOM-9482 delivered to <strong className="text-slate-900">Bhukasur</strong>.
+                Order {order.orderId} delivered to <strong className="text-slate-900">{order.customerName}</strong>.
               </p>
             </div>
 

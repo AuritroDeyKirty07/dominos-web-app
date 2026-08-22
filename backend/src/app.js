@@ -10,6 +10,7 @@ import { isAuthMiddleware } from "./shared/middleware/auth-middleware.js";
 import { profileRouter } from "./modules/auth/routes/profileRoutes.js";
 import kitchenRoutes from "./modules/kitchen/routes/kitchenRoutes.js";
 import deliveryRoutes from "./modules/delivery/routes/delivery.routes.js";
+import orderRouter from "./modules/order/routes/index.js";
 dotenv.config();
 
 
@@ -29,6 +30,7 @@ app.use("/api/v1", profileRouter);
 app.use("/api/delivery", deliveryRoutes);
 app.use("/api/kitchen", kitchenRoutes);
 app.use("/api/delivery", deliveryRoutes);
+app.use("/api/v1", orderRouter);
 
 
 const promise = createConnection();
