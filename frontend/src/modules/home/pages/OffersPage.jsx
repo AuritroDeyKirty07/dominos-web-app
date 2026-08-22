@@ -52,7 +52,7 @@ export const OffersPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    <div className="w-full px-[5%] py-8 space-y-8">
       {/* Header */}
       <div className="bg-gradient-to-r from-dominos-dark to-dominos-blue text-white rounded-3xl p-6 sm:p-10 shadow-dominos">
         <div className="flex items-center gap-2 text-amber-300 text-xs font-black uppercase tracking-widest">

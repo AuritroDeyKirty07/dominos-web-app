@@ -59,7 +59,7 @@ export const OrderHistoryPage = () => {
 
   if (orders.length === 0) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-16">
+      <div className="w-full px-[5%] py-16">
         <EmptyState
           icon={Pizza}
           title="No Orders Placed Yet"
@@ -72,7 +72,7 @@ export const OrderHistoryPage = () => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="w-full px-[5%] py-8 space-y-6">
       {/* Header */}
       <div className="border-b border-slate-200 pb-4">
         <h1 className="text-3xl font-black font-brand text-slate-900 tracking-wide">

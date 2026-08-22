@@ -1,3 +1,6 @@
+const fs = require('fs');
+
+const content = 
 import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore.js';
@@ -8,8 +11,11 @@ import { Pizza, ShoppingBag, MapPin, ChevronDown, Award, User } from 'lucide-rea
 import './Navbar.css';
 
 const formatCurrency = (amount) => {
-  const value = Math.round(amount || 0);
-  return `₹${value.toLocaleString('en-IN')}`;
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(amount || 0);
 };
 
 export default function Navbar() {
@@ -59,7 +65,7 @@ export default function Navbar() {
                 <Award className="w-3.5 h-3.5" />
                 <span>{points} Cheesy Points</span>
               </div>
-              <span>•</span>
+              <span>�</span>
               <span>Delivery Guarantee: 30 Mins or Free*</span>
             </div>
           </div>
@@ -102,7 +108,7 @@ export default function Navbar() {
                     </div>
                     <span className="text-xs font-semibold text-slate-800 truncate max-w-[170px]">
                       {deliveryMode === 'delivery'
-                        ? (selectedAddress ? `${selectedAddress.type}: ${selectedAddress.addressLine1}` : 'Select Address')
+                        ? (selectedAddress ? \\\\\\: \\\\\\ : 'Select Address')
                         : 'Indiranagar 100 Ft Store'}
                     </span>
                   </div>
@@ -117,11 +123,7 @@ export default function Navbar() {
                     <Link
                       key={link.path}
                       to={link.path}
-                      className={`px-3.5 py-2 rounded-lg text-sm font-semibold transition-all relative ${
-                        active
-                          ? 'text-[#006491] bg-[#006491]/10'
-                          : 'text-slate-700 hover:text-[#006491] hover:bg-slate-50'
-                      }`}
+                      className={\\\px-3.5 py-2 rounded-lg text-sm font-semibold transition-all relative \\\\\\}
                       style={{ textDecoration: 'none' }}
                     >
                       {link.name}
@@ -187,19 +189,19 @@ export default function Navbar() {
                         {totalItemsCount} {totalItemsCount === 1 ? 'Item' : 'Items'} Added
                       </span>
                       <span className="text-sm font-extrabold leading-tight">
-                        {totalItemsCount > 0 ? formatCurrency(grandTotal) : '₹0'}
+                        {totalItemsCount > 0 ? formatCurrency(grandTotal) : '?0'}
                       </span>
                     </div>
                   </div>
                 </Link>
               </div>
           </div>
-        </header>
 
-        <LocationSelectorModal
-          isOpen={isLocationModalOpen}
-          onClose={() => setIsLocationModalOpen(false)}
-        />
+          <LocationSelectorModal
+            isOpen={isLocationModalOpen}
+            onClose={() => setIsLocationModalOpen(false)}
+          />
+        </header>
       </>
     );
   }
@@ -248,7 +250,8 @@ export default function Navbar() {
         )}
         {!isLoggedIn && (
           <button
-            className={`nav-btn ${currentPath === '/register' ? 'active' : ''}`}
+            className={\\\
+av-btn \\\\\\}
             onClick={() => navigate('/register')}
           >
             Register
@@ -257,7 +260,8 @@ export default function Navbar() {
 
         {!isLoggedIn && (
           <button
-            className={`nav-btn ${currentPath === '/login' ? 'active' : ''}`}
+            className={\\\
+av-btn \\\\\\}
             onClick={() => navigate('/login')}
           >
             Login
@@ -287,3 +291,6 @@ export default function Navbar() {
     </nav>
   );
 }
+;
+
+fs.writeFileSync('e:\\\\Training Stuff\\\\Node\\\\dominos-web-app-main\\\\frontend\\\\src\\\\shared\\\\components\\\\Navbar.jsx', content, 'utf8');

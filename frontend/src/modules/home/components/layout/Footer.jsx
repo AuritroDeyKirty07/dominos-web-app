@@ -5,7 +5,7 @@ import { Pizza, Phone, Mail, ShieldCheck, Clock, Award, Heart } from 'lucide-rea
 export const Footer = () => {
   return (
     <footer className="bg-dominos-dark text-slate-300 pt-14 pb-8 border-t border-slate-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Value props banner */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 pb-12 border-b border-slate-800">
           <div className="flex items-center gap-4 p-4 rounded-xl bg-slate-900/60 border border-slate-800/80">
@@ -93,14 +93,9 @@ export const Footer = () => {
           </div>
         </div>
 
-        {/* Bottom copyright */}
-        <div className="pt-8 border-t border-slate-800 text-center sm:flex sm:justify-between sm:items-center text-xs text-slate-500">
-          <p>© {new Date().getFullYear()} Domino's Pizza Customer Portal. All Rights Reserved.</p>
-          <p className="mt-2 sm:mt-0 flex items-center justify-center gap-1">
-            <span>Crafted with</span>
-            <Heart className="w-3.5 h-3.5 text-dominos-red fill-dominos-red" />
-            <span>for Pizza Lovers</span>
-          </p>
+
+        <div className="pt-8 border-t border-slate-800 text-center text-xs text-slate-500">
+          <p>© {new Date().getFullYear()} Domino's Pizza Portal. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

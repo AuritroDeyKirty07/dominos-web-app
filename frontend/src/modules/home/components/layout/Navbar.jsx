@@ -47,7 +47,7 @@ export const Navbar = () => {
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm">
         {/* Top announcement bar */}
         <div className="bg-dominos-dark text-slate-200 text-xs py-1.5 px-4">
-          <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <div className="w-full px-[5%] flex items-center justify-between">
             <div className="flex items-center gap-2 font-medium">
               <span className="bg-dominos-red text-white text-[10px] uppercase font-black px-1.5 py-0.5 rounded tracking-wide">
                 Offer
@@ -66,7 +66,7 @@ export const Navbar = () => {
         </div>
 
         {/* Main Navbar */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-full px-[5%]">
           <div className="flex items-center justify-between h-20 gap-4">
             {/* Brand Logo & Location */}
             <div className="flex items-center gap-6">

@@ -4,6 +4,7 @@ import { Footer } from './Footer.jsx';
 import { useCart } from '../../hooks/useCart.js';
 import { formatCurrency } from '../../utils/formatters.js';
 import { ShoppingBag, ArrowRight } from 'lucide-react';
+import { useAuthStore } from '../../../../shared/store/authStore.js';
 
 export const CustomerLayout = () => {
   const { totalItemsCount, grandTotal } = useCart();
@@ -11,6 +12,7 @@ export const CustomerLayout = () => {
 
   // Hide mobile floating bar on Cart and Checkout pages
   const hideFloatingCart = location.pathname === '/cart' || location.pathname === '/checkout';
+  const { role } = useAuthStore();
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F8FAFC]">
@@ -20,7 +22,7 @@ export const CustomerLayout = () => {
       </main>
 
       {/* Floating Mobile Cart Bar */}
-      {!hideFloatingCart && totalItemsCount > 0 && (
+      {role !== 'admin' && !hideFloatingCart && totalItemsCount > 0 && (
         <div className="fixed bottom-0 left-0 right-0 z-30 p-3 bg-white/95 backdrop-blur-md border-t border-slate-200 shadow-2xl md:hidden">
           <Link
             to="/cart"

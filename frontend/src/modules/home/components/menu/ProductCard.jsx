@@ -19,19 +19,12 @@ export const ProductCard = ({ product }) => {
     e.stopPropagation();
     e.preventDefault();
     if (isCustomizable) {
-      // Default standard medium
-      const defaultCustomization = {
-        size: product.customizationOptions?.sizes?.[0]?.name || 'Regular',
-        crust: product.customizationOptions?.crusts?.[0]?.name || 'New Hand Tossed',
-        toppings: [],
-        addOns: [],
-      };
-      addToCart(product, defaultCustomization, 1);
+      setIsCustomizeOpen(true);
     } else {
       addToCart(product, null, 1);
+      setShowAddedQuick(true);
+      setTimeout(() => setShowAddedQuick(false), 800);
     }
-    setShowAddedQuick(true);
-    setTimeout(() => setShowAddedQuick(false), 800);
   };
 
   return (
@@ -87,31 +80,18 @@ export const ProductCard = ({ product }) => {
               </span>
             </div>
 
-            <div className="flex items-center gap-1.5">
-              {isCustomizable && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => setIsCustomizeOpen(true)}
-                  className="px-2.5 py-1.5 text-xs text-dominos-blue border-dominos-blue/30 hover:border-dominos-blue hover:bg-dominos-blue/5"
-                  title="Customize Size, Crust & Toppings"
-                >
-                  <SlidersHorizontal className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Customise</span>
-                </Button>
-              )}
-
+            <div className="flex items-center gap-1.5 flex-shrink-0">
               <Button
                 variant="danger"
                 size="sm"
                 onClick={handleQuickAdd}
-                className="px-3 py-1.5 text-xs font-bold shadow-sm"
+                className="px-4 py-1.5 text-xs font-bold shadow-sm whitespace-nowrap min-w-[70px]"
               >
-                {showAddedQuick ? (
-                  <Check className="w-4 h-4 stroke-[3]" />
+                {showAddedQuick && !isCustomizable ? (
+                  <Check className="w-4 h-4 stroke-[3] flex-shrink-0" />
                 ) : (
                   <>
-                    <Plus className="w-3.5 h-3.5 stroke-[3]" />
+                    <Plus className="w-3.5 h-3.5 stroke-[3] flex-shrink-0" />
                     <span>ADD</span>
                   </>
                 )}

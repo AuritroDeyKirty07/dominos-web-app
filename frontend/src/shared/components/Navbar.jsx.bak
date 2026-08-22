@@ -8,8 +8,11 @@ import { Pizza, ShoppingBag, MapPin, ChevronDown, Award, User } from 'lucide-rea
 import './Navbar.css';
 
 const formatCurrency = (amount) => {
-  const value = Math.round(amount || 0);
-  return `₹${value.toLocaleString('en-IN')}`;
+  return new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    maximumFractionDigits: 0,
+  }).format(amount || 0);
 };
 
 export default function Navbar() {
@@ -32,20 +35,29 @@ export default function Navbar() {
   const deliveryMode = customer ? customer.deliveryMode : 'delivery';
 
   // If user is a customer, render the rich customer navbar
-  if (isLoggedIn && role === 'customer') {
-    const navLinks = [
-      { name: 'Home', path: '/' },
-      { name: 'Menu', path: '/menu' },
-      { name: 'Categories', path: '/categories' },
-      { name: 'Offers & Deals', path: '/offers' },
-      { name: 'Order History', path: '/orders' },
-    ];
+  if (isLoggedIn && (role === 'customer' || role === 'admin')) {
+    const navLinks = role === 'admin'
+      ? [
+          { name: 'Home', path: '/' },
+          { name: 'Menu', path: '/menu' },
+          { name: 'Categories', path: '/categories' },
+          { name: 'Offers & Deals', path: '/offers' },
+          { name: 'Dashboard', path: '/profile' },
+        ]
+      : [
+          { name: 'Home', path: '/' },
+          { name: 'Menu', path: '/menu' },
+          { name: 'Categories', path: '/categories' },
+          { name: 'Offers & Deals', path: '/offers' },
+          { name: 'Order History', path: '/orders' },
+        ];
 
     const points = profile?.loyaltyPoints || 420;
 
     return (
       <>
         {/* Customer Top Announcement Bar */}
+        {role !== 'admin' && (
         <div className="bg-[#0C1E28] text-slate-200 text-xs py-1.5 px-4 font-sans">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -64,28 +76,36 @@ export default function Navbar() {
             </div>
           </div>
         </div>
+        )}
 
         {/* Main Customer Header */}
         <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-sm font-sans w-full">
           <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-[70px]">
             {/* Brand Logo & Location */}
             <div className="flex items-center gap-6">
-                <Link to="/" className="flex items-center gap-2 group flex-shrink-0" style={{ textDecoration: 'none' }}>
-                  <div className="w-10 h-10 bg-[#006491] rounded-xl flex items-center justify-center shadow-md relative overflow-hidden">
-                    <div className="absolute top-0 right-0 w-5 h-5 bg-[#E31837] rounded-bl-xl" />
-                    <Pizza className="w-6 h-6 text-white relative z-10" />
-                  </div>
-                  <div className="flex flex-col">
-                    <span className="text-xl sm:text-2xl font-black tracking-wider text-[#006491] leading-none">
-                      DOMINO'S<span className="text-[#E31837]">.</span>
-                    </span>
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
-                      Hot & Fresh Pizza
-                    </span>
-                  </div>
-                </Link>
+                {role === 'admin' ? (
+                  <Link to="/" style={{ textDecoration: 'none' }}>
+                    <span className="brand-text">Dominos</span>
+                  </Link>
+                ) : (
+                  <Link to="/" className="flex items-center gap-2 group flex-shrink-0" style={{ textDecoration: 'none' }}>
+                    <div className="w-10 h-10 bg-[#006491] rounded-xl flex items-center justify-center shadow-md relative overflow-hidden">
+                      <div className="absolute top-0 right-0 w-5 h-5 bg-[#E31837] rounded-bl-xl" />
+                      <Pizza className="w-6 h-6 text-white relative z-10" />
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="text-xl sm:text-2xl font-black tracking-wider text-[#006491] leading-none">
+                        DOMINO'S<span className="text-[#E31837]">.</span>
+                      </span>
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-slate-400">
+                        Hot & Fresh Pizza
+                      </span>
+                    </div>
+                  </Link>
+                )}
 
                 {/* Location / Order Type Selector Pill */}
+                {role !== 'admin' && (
                 <button
                   onClick={() => setIsLocationModalOpen(true)}
                   className="hidden md:flex items-center gap-2.5 px-3.5 py-1.5 rounded-full border border-slate-200 hover:border-[#006491]/40 bg-slate-50 hover:bg-white transition-all text-left group max-w-xs cursor-pointer"
@@ -107,6 +127,7 @@ export default function Navbar() {
                     </span>
                   </div>
                 </button>
+                )}
               </div>
 
               {/* Desktop Navigation Links */}
@@ -155,6 +176,7 @@ export default function Navbar() {
                         <User className="w-4 h-4" />
                         My Profile
                       </Link>
+                      {role !== 'admin' && (
                       <Link 
                         to="/addresses" 
                         className="flex items-center gap-3 px-4 py-2.5 text-sm text-slate-700 hover:bg-slate-50 hover:text-[#006491] transition-colors"
@@ -163,11 +185,13 @@ export default function Navbar() {
                         <MapPin className="w-4 h-4" />
                         Saved Addresses
                       </Link>
+                      )}
                     </div>
                   </div>
                 </div>
 
                 {/* Cart Button */}
+                {role !== 'admin' && (
                 <Link
                   to="/cart"
                   className="flex items-center gap-2.5 px-6 py-3 rounded-xl bg-[#E31837] text-white hover:bg-[#b8122c] transition-all shadow-md font-bold text-sm"
@@ -192,14 +216,15 @@ export default function Navbar() {
                     </div>
                   </div>
                 </Link>
+                )}
               </div>
           </div>
-        </header>
 
-        <LocationSelectorModal
-          isOpen={isLocationModalOpen}
-          onClose={() => setIsLocationModalOpen(false)}
-        />
+          <LocationSelectorModal
+            isOpen={isLocationModalOpen}
+            onClose={() => setIsLocationModalOpen(false)}
+          />
+        </header>
       </>
     );
   }
@@ -214,23 +239,11 @@ export default function Navbar() {
       </div>
 
       <div className="navbar-right">
-        {role !== 'cook' && role !== 'delivery' && role !== 'admin' && (
+        {role !== 'cook' && role !== 'delivery' && (
           <Link to="/menu" className="nav-link">
             Menu
           </Link>
         )}
-        
-        {/* Admin Navigation Links */}
-        {role === 'admin' && (
-          <>
-            <Link to="/" className="nav-link">Home</Link>
-            <Link to="/menu" className="nav-link">Menu</Link>
-            <Link to="/categories" className="nav-link">Categories</Link>
-            <Link to="/offers" className="nav-link">Offers & Deals</Link>
-            <Link to="/profile" className="nav-link">Dashboard</Link>
-          </>
-        )}
-
         {isLoggedIn && role === 'customer' && (
           <Link to="/cart" className="nav-link">
             Cart
@@ -287,3 +300,6 @@ export default function Navbar() {
     </nav>
   );
 }
+
+
+

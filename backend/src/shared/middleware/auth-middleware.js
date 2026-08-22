@@ -2,7 +2,6 @@ import { verifyToken } from "../services/tokenService.js";
 
 export const isAuthMiddleware = (req, res, next) => {
   try {
-    console.log("Request is",req.cookies);
     const token = req.cookies.token;
    
     if (!token) {

@@ -1,14 +1,20 @@
 import React, { createContext, useState, useEffect } from 'react';
 import * as orderService from '../services/orderService.js';
+import { useAuthStore } from '../../../shared/store/authStore.js';
 
 export const OrderContext = createContext(null);
 
 export const OrderProvider = ({ children }) => {
+  const { isAuthenticated, user } = useAuthStore();
   const [orders, setOrders] = useState([]);
   const [activeOrder, setActiveOrder] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
 
   const fetchOrders = async () => {
+    if (!isAuthenticated || !user) {
+      setIsLoading(false);
+      return;
+    }
     try {
       setIsLoading(true);
       const list = await orderService.getOrders();
@@ -28,7 +34,7 @@ export const OrderProvider = ({ children }) => {
 
   useEffect(() => {
     fetchOrders();
-  }, []);
+  }, [isAuthenticated, user]);
 
   const handlePlaceOrder = async (orderPayload) => {
     const created = await orderService.placeOrder(orderPayload);

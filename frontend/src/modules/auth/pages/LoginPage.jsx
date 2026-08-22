@@ -1,9 +1,22 @@
 import React, { useState, useEffect } from "react";
-import LoginForm from "../components/LoginForm"; 
+import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../../shared/store/authStore";
+import LoginForm from "../components/LoginForm";  
 import "./AuthPages.css"; 
 
 export default function LoginPage() {
   const [role, setRole] = useState("user");
+  const { isAuthenticated, role: userRole } = useAuthStore();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      if (userRole === 'admin') navigate('/admin', { replace: true });
+      else if (userRole === 'cook') navigate('/kitchen', { replace: true });
+      else if (userRole === 'delivery') navigate('/delivery', { replace: true });
+      else navigate('/', { replace: true });
+    }
+  }, [isAuthenticated, userRole, navigate]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);

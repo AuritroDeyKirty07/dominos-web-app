@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginPage from '../modules/auth/pages/LoginPage';
 import RegisterPage from '../modules/auth/pages/RegisterPage';
 import ProfilePage from '../modules/dashboard/pages/ProfilePage';
+import { ErrorBoundary } from '../modules/dashboard/pages/ErrorBoundary';
 import ProtectedRoute from '../shared/components/ProtectedRoute';
 import ResetPasswordPage from '../modules/auth/pages/ResetPasswordPage';
 import KitchenDashboard from '../modules/kitchen/pages/KitchenDashboard';
@@ -12,9 +13,6 @@ import OrderAcceptancePage from '../modules/delivery/pages/OrderAcceptancePage';
 import OutForDeliveryPage from '../modules/delivery/pages/OutForDeliveryPage';
 
 // Customer Provider & Layout Imports
-import { CustomerProvider } from '../modules/home/store/CustomerContext.jsx';
-import { CartProvider } from '../modules/home/store/CartContext.jsx';
-import { OrderProvider } from '../modules/home/store/OrderContext.jsx';
 import { CustomerLayout } from '../modules/home/components/layout/CustomerLayout.jsx';
 
 // Customer Pages Imports
@@ -40,14 +38,8 @@ export default function AppRoutes() {
       {/* Customer Routes */}
       <Route
         element={
-          <ProtectedRoute allowedRoles={['customer']}>
-            <CustomerProvider>
-              <CartProvider>
-                <OrderProvider>
-                  <CustomerLayout />
-                </OrderProvider>
-              </CartProvider>
-            </CustomerProvider>
+          <ProtectedRoute allowedRoles={['customer', 'admin']}>
+            <CustomerLayout />
           </ProtectedRoute>
         }
       >
@@ -69,7 +61,9 @@ export default function AppRoutes() {
         path="/profile"
         element={
           <ProtectedRoute>
-            <ProfilePage />
+            <ErrorBoundary>
+              <ProfilePage />
+            </ErrorBoundary>
           </ProtectedRoute>
         }
       />
@@ -102,7 +96,7 @@ export default function AppRoutes() {
         } 
       />
       <Route 
-        path="/delivery/accept-order" 
+        path="/delivery/accept-order/:orderId" 
         element={
           <ProtectedRoute allowedRoles={['delivery']}>
             <OrderAcceptancePage />
@@ -110,7 +104,7 @@ export default function AppRoutes() {
         } 
       />
       <Route 
-        path="/delivery/out-for-delivery" 
+        path="/delivery/out-for-delivery/:orderId" 
         element={
           <ProtectedRoute allowedRoles={['delivery']}>
             <OutForDeliveryPage />

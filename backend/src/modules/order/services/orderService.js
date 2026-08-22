@@ -4,6 +4,20 @@ import { userModel } from '../../auth/models/user-model.js';
 import { calculateCartTotals, calculateVerifiedItemUnitPrice } from './cartService.js';
 import { ORDER_STATUS } from '../utils/constants.js';
 
+const STATUS_WEIGHT = {
+  [ORDER_STATUS.PLACED]: 1,
+  [ORDER_STATUS.PREPARING]: 2,
+  [ORDER_STATUS.READY]: 3,
+  [ORDER_STATUS.OUT_FOR_DELIVERY]: 4,
+  [ORDER_STATUS.DELIVERED]: 5,
+};
+
+const shouldAdvanceStatus = (currentStatus, newStatus) => {
+  const currentWeight = STATUS_WEIGHT[currentStatus] || 0;
+  const newWeight = STATUS_WEIGHT[newStatus] || 0;
+  return newWeight > currentWeight;
+};
+
 // Status mapping helper: Kitchen Status -> Customer Status
 const mapKitchenStatusToCustomer = (kitchenStatus) => {
   switch (kitchenStatus) {
@@ -12,7 +26,7 @@ const mapKitchenStatusToCustomer = (kitchenStatus) => {
     case 'Preparing':
       return ORDER_STATUS.PREPARING;
     case 'Ready':
-      return ORDER_STATUS.QUALITY_CHECK;
+      return ORDER_STATUS.READY;
     case 'Out for Delivery':
       return ORDER_STATUS.OUT_FOR_DELIVERY;
     case 'Delivered':
@@ -28,8 +42,8 @@ const getTimelineName = (status) => {
       return 'Order Placed';
     case ORDER_STATUS.PREPARING:
       return 'Preparing in Kitchen';
-    case ORDER_STATUS.QUALITY_CHECK:
-      return 'Quality Check';
+    case ORDER_STATUS.READY:
+      return 'Order Ready';
     case ORDER_STATUS.OUT_FOR_DELIVERY:
       return 'Out for Delivery';
     case ORDER_STATUS.DELIVERED:
@@ -42,11 +56,11 @@ const getTimelineName = (status) => {
 const getTimelineDescription = (status) => {
   switch (status) {
     case ORDER_STATUS.PLACED:
-      return 'Order confirmed and sent to Domino’s kitchen.';
+      return 'Order confirmed and sent to Domino\'s kitchen.';
     case ORDER_STATUS.PREPARING:
       return 'Pizzas are being hand-tossed and prepared by our chef.';
-    case ORDER_STATUS.QUALITY_CHECK:
-      return 'Baked at 245°C. Quality check done and thermal bag sealed.';
+    case ORDER_STATUS.READY:
+      return 'Baked at 245 deg C. Ready for pickup and delivery.';
     case ORDER_STATUS.OUT_FOR_DELIVERY:
       return 'Rider has picked up the order and is on the way.';
     case ORDER_STATUS.DELIVERED:
@@ -62,17 +76,17 @@ export const createOrder = async (orderPayload, customerId) => {
 
   // 1. Calculate & verify pricing
   const rawItems = orderPayload.items || [];
-  const items = rawItems.map(item => {
-    const verifiedUnitPrice = calculateVerifiedItemUnitPrice(item);
+  const items = await Promise.all(rawItems.map(async (item) => {
+    const verifiedUnitPrice = await calculateVerifiedItemUnitPrice(item);
     return {
       ...item,
       price: verifiedUnitPrice,
       itemTotal: verifiedUnitPrice * (item.quantity || 1),
     };
-  });
+  }));
 
   const discount = orderPayload.pricing?.discount || 0;
-  const computedPricing = calculateCartTotals(items, discount);
+  const computedPricing = await calculateCartTotals(items, discount);
 
   const finalPricing = {
     subtotal: computedPricing.subtotal,
@@ -110,7 +124,7 @@ export const createOrder = async (orderPayload, customerId) => {
       {
         status: 'Order Placed',
         timestamp: now,
-        description: 'Order confirmed and sent to Domino’s kitchen.',
+        description: 'Order confirmed and sent to Domino\'s kitchen.',
       },
     ],
   };
@@ -146,7 +160,7 @@ export const getOrderById = async (orderId, customerId) => {
     const kitchenOrder = await KitchenOrder.findOne({ orderNumber: orderId });
     if (kitchenOrder) {
       const mappedStatus = mapKitchenStatusToCustomer(kitchenOrder.status);
-      if (customerOrder.status !== mappedStatus) {
+      if (shouldAdvanceStatus(customerOrder.status, mappedStatus)) {
         customerOrder.status = mappedStatus;
         const timelineName = getTimelineName(mappedStatus);
         
@@ -182,7 +196,7 @@ export const getOrdersByCustomerId = async (customerId) => {
       const kitchenOrder = await KitchenOrder.findOne({ orderNumber: order.orderId });
       if (kitchenOrder) {
         const mappedStatus = mapKitchenStatusToCustomer(kitchenOrder.status);
-        if (order.status !== mappedStatus) {
+        if (shouldAdvanceStatus(order.status, mappedStatus)) {
           order.status = mappedStatus;
           const timelineName = getTimelineName(mappedStatus);
           

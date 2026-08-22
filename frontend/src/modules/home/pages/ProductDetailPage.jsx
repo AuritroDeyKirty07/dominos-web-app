@@ -74,7 +74,7 @@ export const ProductDetailPage = () => {
 
   if (!product) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-16 text-center">
+      <div className="w-full px-[5%] py-16 text-center">
         <h2 className="text-2xl font-bold font-brand">Product Not Found</h2>
         <p className="text-xs text-slate-500 mt-2">The pizza you're looking for doesn't exist.</p>
         <Button variant="primary" onClick={() => navigate('/menu')} className="mt-4">
@@ -123,7 +123,7 @@ export const ProductDetailPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-10">
+    <div className="w-full px-[5%] py-8 space-y-10">
       {/* Back link */}
       <div>
         <Link

@@ -1,9 +1,9 @@
 import { Cart } from '../models/Cart.js';
 import { validateCouponCode } from './couponService.js';
-import { menuItems } from './menuService.js';
+import { getMenuItemById } from './menuService.js';
 
-export const calculateVerifiedItemUnitPrice = (item) => {
-  const catalogItem = menuItems.find(m => m.id === item.id);
+export const calculateVerifiedItemUnitPrice = async (item) => {
+  const catalogItem = await getMenuItemById(item.id);
   if (!catalogItem) return Number(item.unitPrice || item.price || 0);
 
   let basePrice = catalogItem.price;
@@ -45,11 +45,12 @@ export const calculateVerifiedItemUnitPrice = (item) => {
   return basePrice;
 };
 
-export const calculateCartTotals = (items = [], couponDiscount = 0) => {
-  const subtotal = items.reduce((sum, item) => {
-    const verifiedUnitPrice = calculateVerifiedItemUnitPrice(item);
-    return sum + (verifiedUnitPrice * (item.quantity || 1));
-  }, 0);
+export const calculateCartTotals = async (items = [], couponDiscount = 0) => {
+  let subtotal = 0;
+  for (const item of items) {
+    const verifiedUnitPrice = await calculateVerifiedItemUnitPrice(item);
+    subtotal += (verifiedUnitPrice * (item.quantity || 1));
+  }
 
   const discount = Math.min(couponDiscount, subtotal);
   const deliveryFee = subtotal > 350 || subtotal === 0 ? 0 : 35;
@@ -73,11 +74,12 @@ export const getCartByCustomerId = async (customerId) => {
   } catch (err) {}
 
   // Create an empty cart if not found in DB
+  const totals = await calculateCartTotals([]);
   const emptyCart = {
     customerId,
     items: [],
     appliedCoupon: { code: null, discountAmount: 0 },
-    ...calculateCartTotals([]),
+    ...totals,
   };
   return emptyCart;
 };
@@ -98,7 +100,7 @@ export const syncCart = async (customerId, cartPayload) => {
     }
   }
 
-  const totals = calculateCartTotals(items, couponDiscount);
+  const totals = await calculateCartTotals(items, couponDiscount);
 
   const cartData = {
     customerId,
@@ -123,10 +125,11 @@ export const clearCart = async (customerId) => {
     await Cart.deleteOne({ customerId });
   } catch (err) {}
 
+  const totals = await calculateCartTotals([]);
   return {
     customerId,
     items: [],
     appliedCoupon: { code: null, discountAmount: 0 },
-    ...calculateCartTotals([]),
+    ...totals,
   };
 };

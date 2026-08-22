@@ -26,15 +26,15 @@ const TRACKING_STAGES = [
     icon: Flame,
   },
   {
-    key: 'QUALITY_CHECK',
-    label: 'Quality Check & Sealed',
-    description: 'Inspected and sealed in thermal hot-bag',
+    key: 'READY',
+    label: 'Ready for Pickup',
+    description: 'Order is ready for delivery partner',
     icon: ShieldCheck,
   },
   {
     key: 'OUT_FOR_DELIVERY',
     label: 'Out for Delivery',
-    description: 'Rider Suresh is on the way (EV Scooter)',
+    description: 'Rider is on the way',
     icon: Bike,
   },
   {
@@ -58,8 +58,8 @@ export const LiveOrderTracker = ({ order }) => {
       case 'BAKING':
       case 'BAKING IN OVEN':
         return 1;
-      case 'QUALITY_CHECK':
-      case 'QUALITY CHECK':
+      case 'READY':
+      case 'ORDER READY':
         return 2;
       case 'OUT_FOR_DELIVERY':
       case 'OUT FOR DELIVERY':
@@ -175,26 +175,32 @@ export const LiveOrderTracker = ({ order }) => {
 
         {/* Delivery Partner Details Card */}
         <div className="mt-8 pt-6 border-t border-slate-100 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
-            <div className="w-11 h-11 rounded-xl bg-dominos-blue/10 text-dominos-blue flex items-center justify-center font-bold text-base flex-shrink-0">
-              SK
+          {currentStageIndex >= 3 ? (
+            <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
+              <div className="w-11 h-11 rounded-xl bg-dominos-blue/10 text-dominos-blue flex items-center justify-center font-bold text-base flex-shrink-0">
+                DP
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Delivery Partner</p>
+                <p className="text-sm font-bold text-slate-900 truncate">Delivery Executive</p>
+                <p className="text-xs text-emerald-600 font-medium flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Fully Vaccinated & Masked</span>
+                </p>
+              </div>
+              <a
+                href="tel:+919876543210"
+                className="p-2.5 rounded-xl bg-white border border-slate-200 text-dominos-blue hover:bg-dominos-blue hover:text-white transition-colors shadow-sm"
+                title="Call Delivery Partner"
+              >
+                <Phone className="w-4 h-4" />
+              </a>
             </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Delivery Partner</p>
-              <p className="text-sm font-bold text-slate-900 truncate">Suresh K (Hero EV)</p>
-              <p className="text-xs text-emerald-600 font-medium flex items-center gap-1">
-                <ShieldCheck className="w-3.5 h-3.5" />
-                <span>Fully Vaccinated • Masked</span>
-              </p>
+          ) : (
+            <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 justify-center">
+              <p className="text-xs font-semibold text-slate-400">Delivery Partner will be assigned soon</p>
             </div>
-            <a
-              href="tel:+919876543210"
-              className="p-2.5 rounded-xl bg-white border border-slate-200 text-dominos-blue hover:bg-dominos-blue hover:text-white transition-colors shadow-sm"
-              title="Call Delivery Partner"
-            >
-              <Phone className="w-4 h-4" />
-            </a>
-          </div>
+          )}
 
           <div className="flex items-center gap-3.5 p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80">
             <div className="w-11 h-11 rounded-xl bg-dominos-red/10 text-dominos-red flex items-center justify-center font-bold text-base flex-shrink-0">

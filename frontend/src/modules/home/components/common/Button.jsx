@@ -1,5 +1,6 @@
 import React from 'react';
 import { Spinner } from './Spinner.jsx';
+import { cn } from '../../../../lib/utils.js';
 
 export const Button = ({
   children,
@@ -14,7 +15,7 @@ export const Button = ({
   iconPosition = 'left',
   ...props
 }) => {
-  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100';
+  const baseStyles = 'inline-flex items-center justify-center font-medium rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2 active:scale-[0.98] disabled:opacity-60 disabled:cursor-not-allowed disabled:active:scale-100 whitespace-nowrap';
 
   const variants = {
     primary: 'bg-dominos-blue text-white hover:bg-dominos-blue-dark focus:ring-dominos-blue shadow-sm hover:shadow-dominos',
@@ -39,7 +40,7 @@ export const Button = ({
       type={type}
       disabled={disabled || isLoading}
       onClick={onClick}
-      className={`${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`}
+      className={cn(baseStyles, variants[variant], sizes[size], className)}
       {...props}
     >
       {isLoading ? (
@@ -49,9 +50,9 @@ export const Button = ({
         </>
       ) : (
         <>
-          {Icon && iconPosition === 'left' && <Icon className="w-4 h-4" />}
+          {Icon && iconPosition === 'left' && <Icon className="w-4 h-4 flex-shrink-0" />}
           {children}
-          {Icon && iconPosition === 'right' && <Icon className="w-4 h-4" />}
+          {Icon && iconPosition === 'right' && <Icon className="w-4 h-4 flex-shrink-0" />}
         </>
       )}
     </button>
