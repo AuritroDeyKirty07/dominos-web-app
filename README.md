@@ -10,7 +10,6 @@
 | Team 4 | Aditya, Piyush, Rachit | Admin |
 | Team 5 | Ayush, Himanshu, Savan, Animesh | Cook |
 
-> **Note:** Team 4 and Team 5 will independently develop the **Cook Module**. After completion, both implementations will be reviewed and compared, and the better version will be merged into the main branch.
 
 ---
 
@@ -21,7 +20,7 @@
 | Authentication & RBAC | `feature/auth` |
 | Customer | `feature/customer` |
 | Delivery | `feature/delivery` |
-| Cook | `feature/cook-team4` / `feature/cook-team5` |
+| Cook | `feature/cook` |
 | Admin | `feature/admin` |
 
 ---
