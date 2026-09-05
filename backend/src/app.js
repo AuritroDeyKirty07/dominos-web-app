@@ -1,6 +1,10 @@
 import express from "express"
 import dns from "dns";
-dns.setServers(['8.8.8.8', '8.8.4.4']);
+
+if (process.env.NODE_ENV !== 'production') {
+    dns.setServers(['8.8.8.8', '8.8.4.4']);
+}
+
 import { createConnection } from "./shared/config/db.js";
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser";
@@ -14,7 +18,7 @@ import orderRouter from "./modules/order/routes/index.js";
 dotenv.config();
 
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 const app = express();
 
@@ -29,8 +33,6 @@ app.use("/api/v1", profileRouter);
 
 app.use("/api/delivery", deliveryRoutes);
 app.use("/api/kitchen", kitchenRoutes);
-app.use("/api/delivery", deliveryRoutes);
-app.use("/api/v1", orderRouter);
 
 
 const promise = createConnection();
