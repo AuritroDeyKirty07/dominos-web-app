@@ -1,7 +1,8 @@
 import axiosInstance from '../../../shared/api/axiosInstance';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ? (import.meta.env.VITE_API_BASE_URL + '/api/delivery') : 'http://localhost:5000/api/delivery';
-
+const API_BASE_URL = import.meta.env.DEV
+    ? 'http://localhost:5000/api/delivery'
+    : '/api/delivery';
 export const fetchIpLocation = async () => {
   try {
     const res = await fetch('https://ipapi.co/json/');

@@ -1,6 +1,8 @@
 import axiosInstance from "../../../shared/api/axiosInstance";
 
-const API_URL = import.meta.env.VITE_API_BASE_URL ? (import.meta.env.VITE_API_BASE_URL + '/api/kitchen') : 'http://localhost:5000/api/kitchen';
+const API_URL = import.meta.env.DEV
+    ? 'http://localhost:5000/api/kitchen'
+    : '/api/kitchen';
 
 export const getKitchenOrders = async () => {
     const response = await axiosInstance.get(`${API_URL}/orders`);
