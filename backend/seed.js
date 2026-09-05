@@ -346,7 +346,7 @@ const availableCoupons = [
   },
 ];
 
-mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://tanishbatra397_db_user:ttMgLo2NixC5d3Fj@cluster0.npxsnrl.mongodb.net/dominos')
+mongoose.connect(process.env.MONGODB_URI || process.env.DB_URL)
   .then(async () => {
     console.log('Connected to MongoDB. Starting seeding...');
     
