@@ -48,7 +48,10 @@ export default function MapView({
   customerCoords = { lat: 28.6324, lng: 77.2187 },
   riderCoords = null,
   ipData = null,
-  mode = 'restaurant' // 'restaurant' or 'tracking'
+  mode = 'restaurant', // 'restaurant' or 'tracking'
+  customerName = 'Customer',
+  deliveryAddress = 'Delivery Address',
+  paymentMethod = 'COD'
 }) {
   const centerLat = riderCoords ? (restaurantCoords.lat + customerCoords.lat) / 2 : restaurantCoords.lat;
   const centerLng = riderCoords ? (restaurantCoords.lng + customerCoords.lng) / 2 : restaurantCoords.lng;
@@ -97,13 +100,13 @@ export default function MapView({
         {(mode === 'tracking' || customerCoords) && (
           <Marker 
             position={[customerCoords.lat, customerCoords.lng]}
-            icon={createCustomIcon('customer', 'Bhukasur (Customer)')}
+            icon={createCustomIcon('customer', `${customerName} (Customer)`)}
           >
             <Popup>
               <div className="p-1 font-sans text-xs">
-                <strong className="text-emerald-700 block text-sm">Customer: Bhukasur</strong>
-                <span>Sunshine Heights, Sector 14</span>
-                <div className="mt-1 font-bold text-slate-700">Payment: COD (Cash on Delivery)</div>
+                <strong className="text-emerald-700 block text-sm">Customer: {customerName}</strong>
+                <span>{deliveryAddress}</span>
+                <div className="mt-1 font-bold text-slate-700">Payment: {paymentMethod}</div>
               </div>
             </Popup>
           </Marker>

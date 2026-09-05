@@ -44,7 +44,7 @@ export default function LoginForm() {
       if (roleName === 'admin') navigate('/admin');
       else if (roleName === 'cook') navigate('/kitchen');
       else if (roleName === 'delivery') navigate('/delivery');
-      else navigate('/profile');
+      else navigate('/');
 
     } catch (err) {
       setErrorMsg(err.response?.data?.message || 'Login failed.');
