@@ -1,0 +1,68 @@
+/* Admin-specific styles */
+/* These are scoped under .admin-root to avoid conflicts with customer UI */
+
+/* Global admin overrides */
+.admin-root * {
+  box-sizing: border-box;
+}
+
+.admin-root {
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar for admin */
+.admin-root ::-webkit-scrollbar {
+  width: 6px;
+}
+.admin-root ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.admin-root ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+.dark .admin-root ::-webkit-scrollbar-thumb {
+  background: #475569;
+}
+
+/* Animations */
+@keyframes adminFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes adminPulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(228, 0, 43, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(228, 0, 43, 0); }
+}
+@keyframes adminShimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.admin-root .animate-fade-in {
+  animation: adminFadeIn 0.4s ease-out forwards;
+}
+.admin-root .animate-pulse-glow {
+  animation: adminPulseGlow 2s infinite;
+}
+.admin-root .skeleton {
+  background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+  background-size: 200% 100%;
+  animation: adminShimmer 1.5s infinite;
+}
+.dark .admin-root .skeleton {
+  background: linear-gradient(90deg, #334155 25%, #475569 50%, #334155 75%);
+  background-size: 200% 100%;
+}
+
+/* Admin color variables */
+.admin-root {
+  --admin-primary: #E4002B;
+  --admin-secondary: #FFB400;
+  --admin-success: #10B981;
+  --admin-warning: #F59E0B;
+  --admin-danger: #EF4444;
+  --admin-info: #3B82F6;
+}
