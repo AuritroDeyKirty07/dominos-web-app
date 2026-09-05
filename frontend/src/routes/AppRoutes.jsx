@@ -29,6 +29,17 @@ import { OrderDetailPage } from '../modules/home/pages/OrderDetailPage.jsx';
 import { OrderTrackingPage } from '../modules/home/pages/OrderTrackingPage.jsx';
 import { AddressManagementPage } from '../modules/home/pages/AddressManagementPage.jsx';
 
+// ─── Admin Panel Imports ──────────────────────────────────────────────────────
+import AdminLayout from '../modules/admin/layouts/AdminLayout';
+import AdminDashboard from '../modules/admin/pages/Dashboard/Dashboard';
+import AdminOrders from '../modules/admin/pages/Orders/Orders';
+import AdminMenu from '../modules/admin/pages/Menu/Menu';
+import AdminCustomers from '../modules/admin/pages/Customers/Customers';
+import AdminEmployees from '../modules/admin/pages/Employees/Employees';
+import AdminAnalytics from '../modules/admin/pages/Analytics/Analytics';
+import AdminSettings from '../modules/admin/pages/Settings/Settings';
+import AdminProfile from '../modules/admin/pages/Profile/Profile';
+
 export default function AppRoutes() {
   return (
     <Routes>
@@ -111,6 +122,27 @@ export default function AppRoutes() {
           </ProtectedRoute>
         } 
       />
+
+      {/* ─── Admin Panel Routes ──────────────────────────────────────────── */}
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute allowedRoles={['admin']}>
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Navigate to="/admin/dashboard" replace />} />
+        <Route path="dashboard" element={<AdminDashboard />} />
+        <Route path="orders" element={<AdminOrders />} />
+        <Route path="menu" element={<AdminMenu />} />
+        <Route path="customers" element={<AdminCustomers />} />
+        <Route path="employees" element={<AdminEmployees />} />
+        <Route path="analytics" element={<AdminAnalytics />} />
+        <Route path="settings" element={<AdminSettings />} />
+        <Route path="profile" element={<AdminProfile />} />
+      </Route>
+
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

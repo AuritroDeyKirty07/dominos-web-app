@@ -227,7 +227,7 @@ export default function Navbar() {
             <Link to="/menu" className="nav-link">Menu</Link>
             <Link to="/categories" className="nav-link">Categories</Link>
             <Link to="/offers" className="nav-link">Offers & Deals</Link>
-            <Link to="/profile" className="nav-link">Dashboard</Link>
+            <Link to="/admin/dashboard" className="nav-link">Dashboard</Link>
           </>
         )}
 
