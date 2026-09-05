@@ -43,8 +43,7 @@ export const loginController = async (req, res) => {
       .json({ message: "login successfull", userToken: token, user });
   } catch (error) {
     logger.error(error);
-    // console.log(error);
-    res.status(500).json({ message: "internal server error" });
+    return res.status(400).json({ message: error.message || "Invalid credentials" });
   }
 };
 

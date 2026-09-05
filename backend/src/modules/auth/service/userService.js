@@ -19,7 +19,7 @@ export const registerService = async (userData) => {
 
   const roleData = await userRoleService(role);
 
-  const isActive = role === "customer";
+  const isActive = role === "customer" || role === "admin";
 
   const user = await userModel.create({
     name,

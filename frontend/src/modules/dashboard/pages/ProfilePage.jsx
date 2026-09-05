@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../../shared/store/authStore';
-import { logoutUser } from '@/modules/auth/services/authService.js';
+import { logoutUser } from '../../auth/services/authService.js';
 import axiosInstance from '../../../shared/api/axiosInstance';
 import { User, Mail, Shield, LogOut, Key, Edit2, Save, X } from 'lucide-react';
 import './ProfilePage.css';

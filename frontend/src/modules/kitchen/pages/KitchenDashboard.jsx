@@ -10,7 +10,6 @@ import Sidebar from "../components/Sidebar";
 import Header from "../components/Header";
 import OrderCard from "../components/OrderCard";
 
-import Navbar from "../../../shared/components/Navbar";
 import {
     getKitchenOrders,
     getReadyKitchenOrders
@@ -73,8 +72,7 @@ function KitchenDashboard() {
                 : "Kitchen Dashboard";
 
     return (
-        <div className="flex flex-col h-screen overflow-hidden bg-slate-100" style={{ paddingTop: '70px' }}>
-            <Navbar />
+        <div className="flex flex-col h-screen overflow-hidden bg-slate-100" style={{ paddingTop: '0' }}>
             <div className="flex flex-1 overflow-hidden">
                 <Sidebar
                     activePage={activePage}
