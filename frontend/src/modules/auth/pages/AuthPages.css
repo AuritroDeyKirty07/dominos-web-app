@@ -1,9 +1,8 @@
 .auth-page-wrapper {
   display: flex;
-  min-height: 100vh;
+  min-height: calc(100vh - 70px);
   width: 100vw;
   overflow: hidden;
-  padding-top: 70px; 
 }
 
 .auth-image-side {
