@@ -53,23 +53,23 @@ export const HomePage = () => {
   }, []);
 
   return (
-    <div className="space-y-8 sm:space-y-10 pb-12">
+    <div className="space-y-12 sm:space-y-16 pb-12">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-[#0C1E28] via-slate-900 to-[#006491]/90 text-white overflow-hidden pt-8 pb-8 sm:pt-12 sm:pb-12">
+      <section className="relative bg-gradient-to-br from-[#0C1E28] via-slate-900 to-[#006491]/90 text-white overflow-hidden pt-24 pb-12 sm:pt-32 sm:pb-20">
         {/* Abstract Background Glows */}
         <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#E31837]/30 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-[#006491]/40 rounded-full blur-3xl pointer-events-none" />
 
         <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center gap-8">
+          <div className="flex flex-col lg:flex-row items-center gap-12">
             {/* Left Content */}
-            <div className="w-full lg:w-1/2 space-y-4 text-center lg:text-left flex flex-col items-center lg:items-start">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-amber-300">
+            <div className="w-full lg:w-1/2 space-y-6 text-center lg:text-left flex flex-col items-center lg:items-start">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-bold text-amber-300">
                 <Sparkles className="w-3.5 h-3.5" />
                 <span>30-Minute Guaranteed Delivery or Free*</span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-wide leading-tight text-white">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-wide leading-tight text-white">
                 CRAVING HOT & CRISPY <br className="hidden xl:block" />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#E31837] to-orange-400">
                   DOMINO'S PIZZA?
@@ -81,10 +81,10 @@ export const HomePage = () => {
               </p>
 
               {/* Order Mode & CTA */}
-              <div className="pt-2 flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+              <div className="pt-2 flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
                 <Button
                   variant="danger"
-                  size="lg"
+                  size="xl"
                   onClick={() => navigate('/menu')}
                   className="w-full sm:w-auto shadow-[0_8px_20px_-4px_rgba(227,24,55,0.3)] font-bold text-sm sm:text-base tracking-wider"
                 >
@@ -93,7 +93,7 @@ export const HomePage = () => {
                 </Button>
                 <Button
                   variant="outline"
-                  size="lg"
+                  size="xl"
                   onClick={() => navigate('/offers')}
                   className="w-full sm:w-auto bg-white/5 border-white/20 text-white hover:bg-white/10 hover:border-white/30 font-bold text-sm sm:text-base tracking-wider"
                 >
